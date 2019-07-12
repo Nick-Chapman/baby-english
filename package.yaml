@@ -1,0 +1,28 @@
+name:                baby-english
+version:             0.1.0.0
+description:         Grammar for baby english
+license:             BSD3
+author:              Nick Chapman
+maintainer:          nic@amadido.co.uk
+github:              https://github.com/Nick-Chapman/baby-english.git
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+dependencies:
+- base >= 4.7 && < 5
+- containers
+- extra
+- EarleyM
+
+ghc-options:
+- -Wall
+- -threaded
+- -rtsopts
+- -with-rtsopts=-N
+
+executables:
+  baby-console-exe:
+    main:                Main.hs
+    source-dirs:         app
