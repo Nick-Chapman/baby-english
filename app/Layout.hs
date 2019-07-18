@@ -1,5 +1,5 @@
 
-module Layout(Layout,lay,mark,newline,toString) where
+module Layout(Layout,lay,scope,newline,toString) where
 
 import Control.Monad (ap,liftM)
 import qualified Data.List as List
@@ -27,8 +27,8 @@ lay s = Layout $ \_ n -> ((), n + length s, [s])
 newline :: Layout ()
 newline = Layout $ \m _ -> ((), m, ["\n" <> List.take m (List.repeat ' ')])
 
-mark :: Layout () -> Layout ()
-mark (Layout f) = Layout $ \_ n -> f n n
+scope :: Layout () -> Layout ()
+scope (Layout f) = Layout $ \_ n -> f n n
 
 toString :: Layout () -> String
 toString (Layout f) = concat xs where ((),_,xs) = f 0 0
