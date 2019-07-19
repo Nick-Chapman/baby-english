@@ -18,7 +18,7 @@ import Cat
 import Prelude hiding(words)
 import Data.List (intersperse)
 
-data Tree = Word String | Node Cat [Tree]
+data Tree = Word String | Node Cat [Tree] deriving (Eq)
 
 mkWord :: String -> Tree
 mkWord = Word
@@ -61,7 +61,8 @@ nodeCount = \case
 blahCount :: Tree -> Int
 blahCount = \case
     Word _ -> 0
-    Node Blah trees -> 1 + (sum $ map blahCount trees)
+    Node Frag trees -> (length trees - 1) + (sum $ map blahCount trees)
+    Node Blah trees -> (length trees - 1) + (sum $ map blahCount trees)
     Node _ trees -> sum $ map blahCount trees
 
 isSingleWord :: Tree -> Bool

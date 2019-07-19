@@ -1,3 +1,4 @@
+{-# LANGUAGE FlexibleInstances #-}
 
 module Layout(Layout,lay,scope,newline,toString) where
 
@@ -6,6 +7,9 @@ import qualified Data.List as List
 
 -- TODO: recode using Monad Transformers
 data Layout a = Layout (Int -> Int -> (a, Int, [String]))
+
+instance Show (Layout ()) where
+    show = toString
 
 instance Functor Layout where fmap = liftM
 instance Applicative Layout where pure = return; (<*>) = ap
@@ -31,4 +35,7 @@ scope :: Layout () -> Layout ()
 scope (Layout f) = Layout $ \_ n -> f n n
 
 toString :: Layout () -> String
-toString (Layout f) = concat xs where ((),_,xs) = f 0 0
+toString (Layout f) = clean $ concat xs where ((),_,xs) = f 0 0
+
+clean :: String -> String
+clean = unlines . map (reverse . dropWhile (== ' ') . reverse) . lines

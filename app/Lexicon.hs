@@ -8,8 +8,6 @@ module Lexicon(
 
 import Prelude hiding(exp,fail,words,seq)
 import EarleyM (Gram)
-import qualified Data.List as List
-
 import Cat
 import Tree
 
@@ -27,8 +25,8 @@ entry cat sels w = Lexicon [(w,(sels,cat))]
 combine :: [Lexicon] -> Lexicon
 combine = Lexicon . concat . map unLexicon
 
-lookLexicon :: Lexicon -> String -> Maybe ([Sel], Cat)
-lookLexicon (Lexicon lexicon) w  = List.lookup w lexicon
+lookLexicon :: Lexicon -> String -> [ ([Sel], Cat) ]
+lookLexicon (Lexicon lexicon) w = map snd $ filter (\(w',_) -> w==w') lexicon
 
 inLexicon :: Lexicon -> String -> Bool
 inLexicon (Lexicon lexicon) w = w `elem` map fst lexicon

@@ -2,10 +2,11 @@
 
 module Cat(Cat(..)) where
 
-data Cat = Blah | Sen | Comp | Inf | VP | PP | NP | Nom | AdvP deriving (Eq)
+data Cat = Frag | Blah | Sen | Comp | Inf | VP | PP | NP | Nom | AdvP deriving (Eq)
 
 instance Show Cat where
     show = \case
+        Frag -> "*"
         Blah -> "?"
         Sen -> "Sen"
         Comp -> "Comp"

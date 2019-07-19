@@ -1,6 +1,6 @@
 {-# LANGUAGE RecordWildCards #-}
 
-module Results(makeResults) where
+module Results(Results(..),makeResults,layResults) where
 
 import Numeric.Extra(intToDouble)
 import Tree(Tree,layTree)
@@ -14,7 +14,7 @@ data Results = Results
     , selectedAmbIndex :: Double
     , understanding :: Double
     , selected :: [Result]
-    }
+    } deriving (Eq)
 
 data Result = Result
     { tree :: Tree
@@ -23,7 +23,7 @@ data Result = Result
     , blahCount :: Int
     , understood :: Double
     , nps :: [String]
-    } deriving (Show)
+    } deriving (Eq)
 
 
 makeResults :: [Tree] -> Results
@@ -46,15 +46,12 @@ makeResult tree = Result {..}
           nps = Tree.allNps tree
 
 
-instance Show Results where show = Layout.toString . layResults
-
 layResults :: Results -> Layout ()
 layResults Results{..} = do
     newline
-    mapM_ (\(i,p) -> do lay (show i); lay ": "; layResult p; newline)
-        (zip [1::Int ..] selected)
+    mapM_ (\(i,p) -> do lay (show i); lay ": "; layResult p; newline) (zip [1::Int ..] selected)
     lay "fullAmbCount = "; lay (show fullAmbCount); newline
-    --lay "fullAmbIndex = "; lay (show fullAmbIndex); newline
+    lay "fullAmbIndex = "; lay (show fullAmbIndex); newline
     lay "selectedAmbCount = "; lay (show selectedAmbCount); newline
     lay "selectedAmbIndex = "; lay (show selectedAmbIndex); newline
     lay "understanding = "; lay (show understanding); newline
@@ -62,8 +59,8 @@ layResults Results{..} = do
 layResult :: Result -> Layout ()
 layResult Result{..} = scope $ do
     lay "#words = "; lay (show wordCount); newline
-    --lay "#nodes = "; lay (show nodeCount); newline
-    --lay "#blahs = "; lay (show blahCount); newline
+    lay "#nodes = "; lay (show nodeCount); newline
+    lay "#blahs = "; lay (show blahCount); newline
     lay "understood = "; lay (show understood); newline
     layTree tree; newline
     lay "#nps = "; scope (mapM_ (\np -> do lay np; newline) nps)

@@ -31,58 +31,49 @@ theLang lexicon = do
     return start
 
 phraseLang :: Gram () -> Gram String -> Gram Tree -> Lexicon -> Gram Tree
-phraseLang space word phrase0 lexicon = phrase'
+phraseLang space word phrase lexicon = phrase'
     where
-
-        sen = alts [phraseCat Sen] --, phraseCat Blah]
-        comp = alts [phraseCat Comp]
-        vp = alts [phraseCat VP] --phraseCat Blah] -- unknownWords?
-        np = alts [phraseCat NP, phraseCat Blah, unknownWord]
-        nom = alts [phraseCat Nom, phraseCat Blah, unknownWord]
-        pp = phraseCat PP
-        advp = alts [phraseCat AdvP]
-
-        comps = Comps {nom,np,vp,sen,comp,phrase = phrase0}
-
-        unknownWord :: Gram Tree
-        unknownWord = fmap mkWord $ do w <- word; if inLexicon lexicon (lower w) then fail else return w
-
-        noun = unknownWord
-        --verb = unknownWord
-
-        phrase' :: Gram Tree
-        phrase' = alts [unknownWord, headPhrase, adjunctivePhrase, specifiedPhrase]
 
         phraseCat :: Cat -> Gram Tree
         phraseCat cat = do
-            tree <- phrase0
+            tree <- phrase
             if isCat cat tree then return tree else fail
 
+        unknownWord = fmap mkWord $ do
+            w <- word;
+            if inLexicon lexicon (lower w) then fail else return w
+
+        blah = alts [unknownWord, seq Blah [unknownWord,blah]]
+
+        nom = alts [blah,phraseCat Nom]
+        np = alts [blah,phraseCat NP]
+        vp = alts [phraseCat VP] -- adding blah here causes massive full-AMB
+        sen = alts [] --phraseCat Sen
+        comp = alts [] --phraseCat Comp
+
+        comps = Comps {nom,np,vp,sen,comp,phrase}
+
+        lexicalPhrase = do
+            w <- word
+            let frames = lookLexicon lexicon (lower w)
+            alts $ flip map frames $ \(sels,cat) -> do
+                let args = map (\sel -> sel comps) sels
+                seq cat (return (mkWord w) : args)
+
+        pp = phraseCat PP
+
         adjunctivePhrase = alts [
-            --seq VP [verb,np],
-            seq Nom [noun,pp],
-            seq VP [vp,pp],
-            seq VP [vp,advp],
+            seq Nom [unknownWord,pp],
+            seq VP [unknownWord,pp],
+            seq Sen [np,vp],
             fail
             ]
 
-        specifiedPhrase = alts [
-            seq Sen [np,vp]
-            ]
+        chunk = alts [blah,lexicalPhrase,adjunctivePhrase]
 
-        headPhrase :: Gram Tree
-        headPhrase = do
-            w <- word
-            case lookupInDict w of
-                (sels,cat) -> do
-                    let args = map (\sel -> sel comps) sels
-                    seq cat (return (mkWord w) : args)
+        chunks = alts [chunk, seq Frag [chunk, chunks]]
 
-        lookupInDict :: String -> ([Comps -> Gram Tree], Cat)
-        lookupInDict w =
-            case lookLexicon lexicon (lower w) of
-                Just (sels,cat) -> (sels,cat)
-                Nothing -> ([const phrase0], Blah)
+        phrase' = chunks
 
         seq :: Cat -> [Gram Tree] -> Gram Tree
         seq cat args = do
