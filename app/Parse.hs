@@ -23,8 +23,9 @@ parseTree lexicon s =
 theLang :: Lexicon -> Lang Char (Gram Tree)
 theLang lexicon = do
     token <- getToken
-    let space = skipWhile1 $ do x <- token; if Char.isSpace x then return () else fail
-    let word = many1 $ do x <- token; if Char.isSpace x then fail else return x
+    let sepChar x = Char.isSpace x || x `elem` ".,"
+    let space = skipWhile1 $ do x <- token; if sepChar x then return () else fail
+    let word = many1 $ do x <- token; if sepChar x then fail else return x
     (phrase',phrase) <- declare "phrase"
     produce phrase' $ phraseLang space word phrase lexicon
     let start = optLeadingTrailingSpace space phrase
@@ -43,15 +44,17 @@ phraseLang space word phrase lexicon = phrase'
             w <- word;
             if inLexicon lexicon (lower w) then fail else return w
 
-        blah = alts [unknownWord, seq Blah [unknownWord,blah]]
+        blah = alts [unknownWord, blah2]
+        blah2 = seq Blah [unknownWord,blah]
 
         nom = alts [blah,phraseCat Nom]
         np = alts [blah,phraseCat NP]
-        vp = alts [phraseCat VP] -- adding blah here causes massive full-AMB
+        pp = phraseCat PP
+        vp = phraseCat VP -- adding blah here causes massive full-AMB
         sen = alts [] --phraseCat Sen
         comp = alts [] --phraseCat Comp
 
-        comps = Comps {nom,np,vp,sen,comp,phrase}
+        comps = Comps {nom,np,pp,vp,sen,comp,phrase}
 
         lexicalPhrase = do
             w <- word
@@ -60,8 +63,6 @@ phraseLang space word phrase lexicon = phrase'
                 let args = map (\sel -> sel comps) sels
                 seq cat (return (mkWord w) : args)
 
-        pp = phraseCat PP
-
         adjunctivePhrase = alts [
             seq Nom [unknownWord,pp],
             seq VP [unknownWord,pp],
@@ -69,7 +70,13 @@ phraseLang space word phrase lexicon = phrase'
             fail
             ]
 
-        chunk = alts [blah,lexicalPhrase,adjunctivePhrase]
+        conjunction = do
+            left <- phrase
+            case catOf left of
+                Nothing -> fail -- TODO: conj with single word on left
+                Just cat -> seq cat [return left, phraseCat Conj, phraseCat cat]
+
+        chunk = alts [blah,lexicalPhrase,adjunctivePhrase,conjunction]
 
         chunks = alts [chunk, seq Frag [chunk, chunks]]
 

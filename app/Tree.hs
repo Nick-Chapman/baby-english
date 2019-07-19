@@ -3,12 +3,14 @@
 module Tree (
     Tree, mkWord, mkNode,
     layTree,
+    catOf,
     wordCount,
     nodeCount,
     blahCount,
     rankTrees,
     isSingleWord,
     isCat,
+    words,
     allNps,
     ) where
 
@@ -27,13 +29,12 @@ mkNode :: Cat -> [Tree] -> Tree
 mkNode = Node
 
 instance Show Tree where
-    show = _oneline
-    --show = Layout.toString . layTree
+    show = oneline
 
-_oneline :: Tree -> String
-_oneline = \case
+oneline :: Tree -> String
+oneline = \case
     Word s -> s
-    Node cat trees -> "(" <> List.intercalate " " (show cat : map _oneline trees) <> ")"
+    Node cat trees -> "(" <> List.intercalate " " (show cat : map oneline trees) <> ")"
 
 layTree :: Tree -> Layout ()
 layTree = \case
@@ -47,6 +48,11 @@ layTree = \case
 
 rankTrees :: [Tree] -> [Tree]
 rankTrees = List.sortOn blahCount
+
+catOf :: Tree -> Maybe Cat
+catOf = \case
+    Word _ -> Nothing
+    Node cat _ -> Just cat
 
 wordCount :: Tree -> Int
 wordCount = \case
