@@ -60,7 +60,7 @@ phraseLang space word phrase lexicon = (phrase',blah)
 
         blah = alts [unknown Blah, seq Blah [unknown Blah,blah]]
 
-        nommy = alts [unknown Noun, seq Nom [unknown Noun,nommy]]
+        nommy = alts [unknown Blah, seq Nom [unknown Blah,nommy]]
 
         np = alts [nommy,phraseCat NP]
         pp = phraseCat PP
@@ -82,7 +82,10 @@ phraseLang space word phrase lexicon = (phrase',blah)
 
         adjunctivePhrase = alts [
             seq Nom [unknown Noun,pp],
+
             seq VP [unknown Verb,pp], --50,74
+            --seq VP [vp,pp],
+
             seq Sen [np,vp],
             seq VP [vp,advp],
             fail

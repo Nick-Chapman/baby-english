@@ -25,15 +25,15 @@ the_lexicon = everything
     where
         everything = combine [
 
-            det   ["the","a","your","her","his","my","these","that"],
+            det   ["the","a","your","her","his","my","these","that","those"],
             pro   ["you","he","she","it","they","i","we","her","there","that"],
             prep  ["of","to","at","with","on","in","by","for","from","into"],
             cop   ["was","is","are","been","be","were"],
             conj  ["and","or","but"],
-            particle ["up","down"],
+            particle ["up","down","out"],
 
-            aux ["to","never","even","all","not"],
-            complementizer ["that"],
+            aux ["to","never","even","all","not","ne'er"],
+            complementizer ["that","why","as"],
 
             inflectedVerbs,
             advp ["slightly"], -- TODO, make a "ly" rule
@@ -58,7 +58,7 @@ the_lexicon = everything
         pro = entry NP Pro []
         prep = entry PP Prep [np]
         conj = entry Conj Conj []
-        cop = comb $ map (entry VP Cop) frames
+        cop = comb $ map (entry VP Cop) ([pp]:[sen]:frames)
         verbs = comb $ map (entry VP Verb) frames
 
         inflectedVerbs = combine $ map (mkRule verbInflecion VP Verb) frames
@@ -68,10 +68,9 @@ the_lexicon = everything
 
         frames = [
             [],
-            --[pp],
             [vp],
 --            [np,vp],
-            [np,pp],
+--            [np,pp],
             [np],
             [comp]
             ]
