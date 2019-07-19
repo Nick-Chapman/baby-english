@@ -4,10 +4,7 @@ module Tree (
     Tree, mkWord, mkNode,
     layTree,
     catOf,
-    wordCount,
-    nodeCount,
-    blahCount,
-    rankTrees,
+    size, blahCount,
     isSingleWord,
     isCat,
     words,
@@ -20,70 +17,77 @@ import Cat
 import Prelude hiding(words)
 import Data.List (intersperse)
 
-data Tree = Word String | Node Cat [Tree] deriving (Eq)
+data Tree = Word Cat String | Node Cat [Tree] deriving (Eq)
 
-mkWord :: String -> Tree
+catOf :: Tree -> Cat
+catOf = \case
+    Word pos _ -> pos
+    Node cat _ -> cat
+
+replaceCat :: Cat -> Tree -> Tree
+replaceCat cat = \case
+    Word _ w -> Word cat w
+    Node _ trees -> Node cat trees
+
+
+mkWord :: Cat -> String -> Tree
 mkWord = Word
 
 mkNode :: Cat -> [Tree] -> Tree
-mkNode = Node
+mkNode cat = \case
+    [] -> error "mkNode,0"
+    --[_] -> error "mkNode,1"
+    [tree] -> replaceCat cat tree
+    xs -> Node cat xs
 
 instance Show Tree where
     show = oneline
 
 oneline :: Tree -> String
 oneline = \case
-    Word s -> s
+    Word pos s -> show pos <> "-" <> s
     Node cat trees -> "(" <> List.intercalate " " (show cat : map oneline trees) <> ")"
 
 layTree :: Tree -> Layout ()
 layTree = \case
-    Word s -> lay s
-    Node cat trees -> do
-        lay "("
-        lay (show cat);
-        lay " "
+    Word pos s -> layBracketed pos (lay s)
+    Node cat trees ->
+        layBracketed cat $
         scope $ sequence_ $ List.intersperse newline (map layTree trees)
-        lay ")"
 
-rankTrees :: [Tree] -> [Tree]
-rankTrees = List.sortOn blahCount
+layBracketed :: Cat -> Layout () -> Layout ()
+layBracketed cat x = do
+    lay "("; lay (show cat); lay " "; x; lay ")"
 
-catOf :: Tree -> Maybe Cat
-catOf = \case
-    Word _ -> Nothing
-    Node cat _ -> Just cat
 
-wordCount :: Tree -> Int
-wordCount = \case
-    Word _ -> 1
-    Node _ trees -> sum $ map wordCount trees
-
-nodeCount :: Tree -> Int
-nodeCount = \case
-    Word _ -> 0
-    Node _ trees -> 1 + (sum $ map nodeCount trees)
+size :: Tree -> Int
+size = \case
+    Word _ _ -> 1
+    Node _ trees -> 1 + (sum $ map size trees)
 
 blahCount :: Tree -> Int
 blahCount = \case
-    Word _ -> 0
+    Word Frag _ -> 1
+    Word Blah _ -> 1
+    Word _ _ -> 0
     Node Frag trees -> (length trees - 1) + (sum $ map blahCount trees)
     Node Blah trees -> (length trees - 1) + (sum $ map blahCount trees)
     Node _ trees -> sum $ map blahCount trees
 
+
 isSingleWord :: Tree -> Bool
 isSingleWord = \case
-    Word _ -> True
+    Word _ _ -> True
     Node _ _ -> False
 
 isCat :: Cat -> Tree -> Bool
 isCat cat = \case
-    Word _ -> False
+    Word pos _ -> cat==pos
     Node cat' _ -> cat==cat'
 
 words :: Tree -> [String]
 words = \case
-    Word w -> [w]
+    Word _ w -> [w]
     Node _ trees -> concat $ map words trees
 
 text :: Tree -> String
@@ -91,7 +95,7 @@ text = concat . intersperse " " . words
 
 allSubs :: Tree -> [Tree]
 allSubs tree = tree : case tree of
-    Word _ -> []
+    Word _ _ -> []
     Node _ trees -> trees >>= allSubs
 
 allNps :: Tree -> [String]

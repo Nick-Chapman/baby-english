@@ -16,10 +16,12 @@ import Data.Map(Map)
 import qualified Data.Map as Map hiding (map,filter)
 
 type G = Gram Tree
-data Comps = Comps {nom::G, np::G, pp::G, vp::G, sen::G, phrase::G, comp::G}
+data Comps = Comps {nom::G, np::G, pp::G, advp::G, vp::G, sen::G, phrase::G, comp::G}
 type Sel = Comps -> G
 
-type Entry = ([Sel], Cat)
+type Pos = Cat
+
+type Entry = (Cat, (Pos, [Sel]))
 
 data Lexicon = Lexicon
     { entries :: Map String [Entry]
@@ -48,16 +50,17 @@ words Lexicon {entries} = Map.keys entries
 lookLexicon :: Lexicon -> String -> [Entry]
 lookLexicon Lexicon{entries,rule} w = Map.findWithDefault [] w entries ++ rule w
 
-entry :: Cat -> [Sel] -> String -> Lexicon
-entry cat sels w =
+entry :: Cat -> Cat -> [Sel] -> [String] -> Lexicon
+entry cat pos sels ws =
+    combine $ flip map ws $ \w ->
     Lexicon
-    { entries = Map.singleton w [(sels,cat)]
+    { entries = Map.singleton w [(cat,(pos,sels))]
     , rule = const []
     }
 
-mkRule :: (String -> Bool) -> Cat -> [Sel] -> Lexicon
-mkRule pred cat sels =
+mkRule :: (String -> Bool) -> Cat -> Cat -> [Sel] -> Lexicon
+mkRule pred cat pos sels =
     Lexicon
     { entries = Map.empty
-    , rule = \w -> if pred w then [(sels,cat)] else []
+    , rule = \w -> if pred w then [(cat,(pos,sels))] else []
     }

@@ -21,6 +21,7 @@ data ExampleRun = ExampleRun
       input :: String,
       lexicon :: Lexicon,
       results :: Maybe Results,
+      known :: [String],
       unknown :: [String]
     }
 
@@ -35,19 +36,18 @@ data Results = Results
 
 data Result = Result
     { tree :: Tree
-    , wordCount :: Int
-    , nodeCount :: Int
-    , blahCount :: Int
+    , elemCount :: Int , blahCount :: Int
     , understood :: Double
     , nps :: [String]
     } deriving (Eq)
 
 makeExampleRun :: Lexicon -> (Int,String) -> ExampleRun
-makeExampleRun lexicon (i,input) = ExampleRun {i,input,lexicon,results,unknown}
+makeExampleRun lexicon (i,input) = ExampleRun {..}
     where
         results = case parseTree lexicon input of
             Left _ -> Nothing
             Right trees -> Just $ makeResults trees
+        known = filter (`elem` parsedWords) dictWords
         unknown = nub parsedWords \\ dictWords
         parsedWords = case results of
             Nothing -> []
@@ -57,8 +57,10 @@ makeExampleRun lexicon (i,input) = ExampleRun {i,input,lexicon,results,unknown}
 makeResults :: [Tree] -> Results
 makeResults trees = Results{..}
     where full = map makeResult trees
+
           selected = filter ((== minBlah) . blahCount) full
           minBlah = minimum (map blahCount full)
+
           fullAmbCount = length full
           fullAmbIndex = log (intToDouble fullAmbCount)
           selectedAmbCount = length selected
@@ -67,40 +69,41 @@ makeResults trees = Results{..}
 
 makeResult :: Tree -> Result
 makeResult tree = Result {..}
-    where wordCount = Tree.wordCount tree
-          nodeCount = Tree.nodeCount tree
-          blahCount = Tree.blahCount tree
-          understood = intToDouble (nodeCount-blahCount) / intToDouble nodeCount
-          nps = Tree.allNps tree
+  where elemCount = Tree.size tree
+        blahCount = Tree.blahCount tree
+        understood = intToDouble (elemCount - blahCount) / intToDouble elemCount
+        nps = Tree.allNps tree
 
 
 layGrandSummary :: [ExampleRun] -> Layout ()
 layGrandSummary xs = do
     flip (layListSep newline) xs $ \x -> do layExampleRun x
     lay "#runs = "; lay (show n); newline
-    lay "#nope = "; lay (show (length nope)); newline
+    lay "#nope = "; lay (show (length nopes));
+    lay " ("; layListSep (lay " ") lay (map (show . i) nopes); lay ")"; newline
+    lay "EFFORT "; lay (show a1); newline
     lay "UNDERSTANDING "; lay (show (percent uu)); newline;
-    lay "AMBIGUITY-1 "; lay (show a1); newline
-    lay "AMBIGUITY-2 "; lay (show a2); newline
+    lay "AMBIGUITY "; lay (show a2); newline
     newline
     lay "NEXT "; scope (flip (layListSep newline) top $ \(i,w) -> do lay (show i); lay " - "; lay w)
     newline
         where
             n = length xs
-            nope = filter (\x -> results x == Nothing) xs
+            nopes = filter (\x -> results x == Nothing) xs
             uu = (sum $ map understanding $ catMaybes $ map results xs) / fromIntegral n
             rs = catMaybes $ map results xs
             a1 = sum $ map fullAmbIndex $ rs
             a2 = sum $ map selectedAmbIndex $ rs
-            top = reverse (take 20 (reverse h))
+            top = reverse (take 10 (reverse h))
             h = hist $ ws
-            ws = concat $ map unknown xs
+            ws = xs >>= unknown
 
 layExampleRun :: ExampleRun -> Layout ()
-layExampleRun ExampleRun{i,input,results,unknown} = do
+layExampleRun ExampleRun{..} = do
     bar; newline
-    lay (show i); lay ": "; lay input; newline
+    lay "EXAMPLE "; lay (show i); lay ": "; lay input; newline
     bar; newline;
+    lay "known = "; layListSep (lay " ") lay known; newline
     lay "unknown = "; layListSep (lay " ") lay unknown; newline
     scope (layMaybe layResults results)
     newline
@@ -108,10 +111,6 @@ layExampleRun ExampleRun{i,input,results,unknown} = do
 
 layResults :: Results -> Layout ()
 layResults Results{..} = do
-    --lay "fullAmbCount = "; lay (show fullAmbCount); newline
-    --lay "fullAmbIndex = "; lay (show fullAmbIndex); newline
-    --lay "selectedAmbCount = "; lay (show selectedAmbCount); newline
-    --lay "selectedAmbIndex = "; lay (show selectedAmbIndex); newline
     lay "understanding = "; lay (show understanding); newline
     lay "amb = "; lay (show amb); newline
     newline
@@ -122,12 +121,13 @@ layResults Results{..} = do
 
 layResult :: Result -> Layout ()
 layResult Result{..} = scope $ do
-    --lay "#words = "; lay (show wordCount); newline
-    --lay "#nodes = "; lay (show nodeCount); newline
-    --lay "#blahs = "; lay (show blahCount); newline
-    --lay "understood = "; lay (show understood); newline
+    lay "#unknown = "; lay (show be); newline
+    lay "understood = "; lay (show understood); newline
     layTree tree
     --lay "#nps = "; scope (mapM_ (\np -> do lay np; newline) nps)
+ where
+     be = Fraction blahCount elemCount
+
 
 layListSep :: Layout () -> (a -> Layout ()) -> [a] -> Layout ()
 layListSep sep layA = \case
