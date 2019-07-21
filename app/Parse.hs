@@ -1,10 +1,11 @@
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE NamedFieldPuns #-}
+{-# LANGUAGE ScopedTypeVariables #-}
 
 module Parse (parseTree) where
 
 import Data.List.Extra(lower)
-import Prelude hiding(exp,fail,words,seq)
+import Prelude hiding(exp,fail,words,seq,pred)
 import EarleyM (Gram,Lang,fail,alts,produce,declare,getToken,many,skipWhile)
 import qualified Data.Char as Char
 import qualified EarleyM as EM (parseAmb,Parsing(..))
@@ -29,49 +30,58 @@ theLang lexicon = do
     (phrase',phrase0) <- declare "phrase"
     let (phrase,blah) = phraseLang space word phrase0 lexicon
     produce phrase' phrase
-
-    let seq = separated space
-
     let chunk = phrase
-    let chunks = alts [chunk, seq Frag [chunk, chunks]]
-
-    let thing = alts [
-            blah,
-            seq Frag [blah,chunks],
-            seq Frag [chunks,blah],
-            seq Frag [blah,chunks,blah],
-            chunks
-            ]
-
+    let thing = do xs <- frags space blah chunk; return $ fraggy xs
     return $ optLeadingTrailingSpace space thing
 
+fraggy :: [Tree] -> Tree
+fraggy = \case [] -> error "fraggy,[]"; [t] -> t; ts -> mkNode (FragN (length ts)) ts
 
+frags :: Gram () -> Gram a -> Gram a -> Gram [a]
+frags space blah chunk = do
+    let chunks = alts [
+            do x <- chunk; return [x],
+            do x <- chunk; space; b <- blah; return [x,b],
+            --do x <- chunk; space; b <- blah; space; xs <- chunks; return $ x:b:xs,
+            do x <- chunk; space; xs <- chunks; return $ x:xs
+            ]
+    alts [
+        do b <- blah; return [b],
+        chunks,
+        do b <- blah; space; xs <- chunks; return $ b:xs
+        ]
+
+-- TODO: inline into theLang above
 phraseLang :: Gram () -> Gram String -> Gram Tree -> Lexicon -> (Gram Tree, Gram Tree)
 phraseLang space word phrase lexicon = (phrase',blah)
     where
+
+        blah = multiword (anyword Blah) Blah
+
+        pickWord pred cat = fmap (mkWord cat) $ do
+            w <- word;
+            if pred w then return w else fail
+
         phraseCat :: Cat -> Gram Tree
         phraseCat cat = do
             tree <- phrase
             if isCat cat tree then return tree else fail
 
-        unknown cat = fmap (mkWord cat) $ do
-            w <- word;
-            if inLexicon lexicon (lower w) then fail else return w
+        multiword w cat = alts [w, seq cat [w, multiword w cat]]
 
-        blah = alts [unknown Blah, seq Blah [unknown Blah,blah]]
+        anyword = pickWord (const True)
+        unknown = pickWord (not . inLexicon lexicon . lower)
 
-        nommy = alts [unknown Blah, seq Nom [unknown Blah,nommy]]
-
-        np = alts [nommy,phraseCat NP]
+        nommy = multiword (unknown BlahNoun) Nom
+        nom = alts [phraseCat Nom, nommy]
+        np = phraseCat NP
         pp = phraseCat PP
-        vp = phraseCat VP -- adding blah here (or even unknown) causes to much full-AMB..
+        vp = phraseCat VP
         advp = phraseCat AdvP
+        comp = phraseCat Comp
+        sen = phraseCat Sen
 
         comps = Comps {nom,np,pp,advp,vp,sen,comp,phrase}
-            where
-                nom = alts [nommy,phraseCat Nom]
-                sen = phraseCat Sen
-                comp = phraseCat Comp
 
         lexicalPhrase = do
             w <- word
@@ -81,22 +91,31 @@ phraseLang space word phrase lexicon = (phrase',blah)
                 seq cat (return (mkWord pos w) : args)
 
         adjunctivePhrase = alts [
-            seq Nom [unknown Noun,pp],
 
-            seq VP [unknown Verb,pp], --50,74
-            --seq VP [vp,pp],
-
-            seq Sen [np,vp],
-            seq VP [vp,advp],
+            seq Sen [np,vp], -- sentence construction
+            seq Nom [nom,pp], -- PP attachment to NOM
+            --seq NP [nom], -- NP without D -- Too general. Invents structure / Not lexical
             fail
             ]
 
-        conjunction = do
-            left <- phrase
+        vp' = alts [unknown BlahVerb, vp]
+
+        verbPhrase = alts [
+            seq VP [vp',np],
+            seq VP [vp',pp], -- PP attachment to VP (or VP taking PP)
+            seq VP [vp',advp]
+            ]
+
+        conjunction x = do
+            left <- x
             let cat = catOf left
             seq cat [return left, phraseCat Conj, phraseCat cat]
 
-        phrase' = alts [lexicalPhrase,adjunctivePhrase,conjunction]
+        phrase' = alts [lexicalPhrase,
+                        verbPhrase,
+                        adjunctivePhrase,
+                        conjunction phrase
+                       ]
 
         seq = separated space
 

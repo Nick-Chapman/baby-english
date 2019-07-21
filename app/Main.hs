@@ -26,28 +26,20 @@ the_lexicon = everything
         everything = combine [
 
             det   ["the","a","your","her","his","my","these","that","those"],
-            pro   ["you","he","she","it","they","i","we","her","there","that"],
+            pro   ["you","he","she","it","they","i","we","her","there","that","me"],
             prep  ["of","to","at","with","on","in","by","for","from","into"],
+            prep' ["by"],
             cop   ["was","is","are","been","be","were"],
             conj  ["and","or","but"],
             particle ["up","down","out"],
 
             aux ["to","never","even","all","not","ne'er"],
-            complementizer ["that","why","as"],
+            complementizer ["that","why","as","what"],
 
+            --verbs ["do","has"],
             inflectedVerbs,
             advp ["slightly"], -- TODO, make a "ly" rule
-
-            -- goal: remove most of these...
-            verbs [
-                    "had",
-                    "do",
-                    "got","get",
-                    "put","felt",
-                    "hope","heard","chucks","bent",
-                    "know","stood",
-                    "can","recollect"
-                    ]
+            advp ["forward"]
             ]
 
         complementizer = entry Comp Complementizer [sen]
@@ -57,9 +49,9 @@ the_lexicon = everything
         det = entry NP Det [nom]
         pro = entry NP Pro []
         prep = entry PP Prep [np]
+        prep' = comb $ map (entry PP Prep) [[nom],[comp]]
         conj = entry Conj Conj []
         cop = comb $ map (entry VP Cop) ([pp]:[sen]:frames)
-        verbs = comb $ map (entry VP Verb) frames
 
         inflectedVerbs = combine $ map (mkRule verbInflecion VP Verb) frames
         verbInflecion w = isEd w || isIng w
@@ -69,8 +61,6 @@ the_lexicon = everything
         frames = [
             [],
             [vp],
---            [np,vp],
---            [np,pp],
             [np],
             [comp]
             ]

@@ -42,7 +42,7 @@ combine :: [Lexicon] -> Lexicon
 combine = foldl union empty
 
 inLexicon :: Lexicon -> String -> Bool
-inLexicon Lexicon{entries} w = Map.member w entries
+inLexicon a w = case lookLexicon a w of [] -> False; _:_ -> True
 
 words :: Lexicon -> [String]
 words Lexicon {entries} = Map.keys entries

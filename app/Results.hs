@@ -11,6 +11,7 @@ import Data.List.Extra(lower)
 import Data.Maybe
 import Layout
 import Lexicon
+import Numeric
 import Numeric.Extra(intToDouble)
 import Parse(parseTree)
 import Tree(Tree,layTree)
@@ -31,14 +32,19 @@ data Results = Results
     , selectedAmbCount :: Int
     , selectedAmbIndex :: Double
     , understanding :: Double
+    , full :: [Result]
     , selected :: [Result]
+    , discarded :: [Result]
+    , minPenalty :: Int
+    , penalties :: [Int]
     } deriving (Eq)
 
 data Result = Result
     { tree :: Tree
-    , elemCount :: Int , blahCount :: Int
+    , fullCount :: Int , blahCount :: Int, xfrags :: Int
+    , penalty :: Int
     , understood :: Double
-    , nps :: [String]
+    -- , nps :: [String]
     } deriving (Eq)
 
 makeExampleRun :: Lexicon -> (Int,String) -> ExampleRun
@@ -47,32 +53,33 @@ makeExampleRun lexicon (i,input) = ExampleRun {..}
         results = case parseTree lexicon input of
             Left _ -> Nothing
             Right trees -> Just $ makeResults trees
-        known = filter (`elem` parsedWords) dictWords
-        unknown = nub parsedWords \\ dictWords
-        parsedWords = case results of
+        (known,unknown) = partition (Lexicon.inLexicon lexicon) parsedWords
+        parsedWords = nub $ case results of
             Nothing -> []
             Just r -> (map lower . Tree.words . tree . head . selected) r
-        dictWords = Lexicon.words lexicon
 
 makeResults :: [Tree] -> Results
 makeResults trees = Results{..}
     where full = map makeResult trees
 
-          selected = filter ((== minBlah) . blahCount) full
-          minBlah = minimum (map blahCount full)
+          (selected,discarded) = partition ((== minPenalty) . penalty) full
+          minPenalty = minimum penalties
+          penalties = map penalty full
 
           fullAmbCount = length full
           fullAmbIndex = log (intToDouble fullAmbCount)
           selectedAmbCount = length selected
           selectedAmbIndex = log (intToDouble selectedAmbCount)
-          understanding = maximum (map understood full)
+          understanding = sum (map understood selected) / fromIntegral (length selected)
 
 makeResult :: Tree -> Result
 makeResult tree = Result {..}
-  where elemCount = Tree.size tree
+  where fullCount = Tree.fullCount tree
         blahCount = Tree.blahCount tree
-        understood = intToDouble (elemCount - blahCount) / intToDouble elemCount
-        nps = Tree.allNps tree
+        xfrags = Tree.fragCount tree - 1
+        understood = intToDouble (fullCount - blahCount) / intToDouble fullCount
+        penalty = xfrags + blahCount -- + fullCount
+        -- nps = Tree.allNps tree
 
 
 layGrandSummary :: [ExampleRun] -> Layout ()
@@ -81,13 +88,15 @@ layGrandSummary xs = do
     lay "#runs = "; lay (show n); newline
     lay "#nope = "; lay (show (length nopes));
     lay " ("; layListSep (lay " ") lay (map (show . i) nopes); lay ")"; newline
-    lay "EFFORT "; lay (show a1); newline
-    lay "UNDERSTANDING "; lay (show (percent uu)); newline;
-    lay "AMBIGUITY "; lay (show a2); newline
+    lay "Effort "; layIndex 1 a1; newline
+    lay "Understood "; lay (show (percent uu)); newline;
+    lay "Ambiguity "; layIndex 1 a2; newline
+    lay "Ambiguity/example "; layIndex 3 (a2 / fromIntegral nGood); newline
     newline
-    lay "NEXT "; scope (flip (layListSep newline) top $ \(i,w) -> do lay (show i); lay " - "; lay w)
+    lay "Next "; scope (flip (layListSep newline) top $ \(i,w) -> do lay (show i); lay " - "; lay w)
     newline
         where
+            nGood = max 1 (n - length nopes)
             n = length xs
             nopes = filter (\x -> results x == Nothing) xs
             uu = (sum $ map understanding $ catMaybes $ map results xs) / fromIntegral n
@@ -109,27 +118,43 @@ layExampleRun ExampleRun{..} = do
     newline
     where bar = lay "--------------------------------------------------"
 
+
+showDiscarded :: Bool
+showDiscarded = False
+
 layResults :: Results -> Layout ()
 layResults Results{..} = do
+    lay "minPenalty = "; lay (show minPenalty); newline
+    --lay "penalties = "; lay (show penalties); newline
     lay "understanding = "; lay (show understanding); newline
     lay "amb = "; lay (show amb); newline
     newline
-    lay "  "; scope $ layListSep (do newline; newline) (\(i,p) -> do lay (show i); lay ": "; layResult p) xs
+    lay "selected:  "; scope $ layListSep (do newline; newline) (\(i,p) -> do lay (show i); lay ": "; layResult p) xs
+    if showDiscarded
+        then do newline; newline; lay "discarded: "; scope $ layListSep (do newline; newline) (\(i,p) -> do lay (show i); lay ": "; layResult p) ys
+        else return ()
     where amb = Fraction selectedAmbCount fullAmbCount
           xs = zip [1::Int ..] selected
+          ys = zip [1::Int ..] (sortOn penalty discarded)
 
 
 layResult :: Result -> Layout ()
 layResult Result{..} = scope $ do
-    lay "#unknown = "; lay (show be); newline
-    lay "understood = "; lay (show understood); newline
+    lay "penalty = "; lay (show penalty); newline
+    lay "#xfrags = "; lay (show xfrags); newline
+    lay "blah/size = "; lay (show be); newline
+    lay "understood = "; layIndex 3 understood; newline
     layTree tree
     --lay "#nps = "; scope (mapM_ (\np -> do lay np; newline) nps)
  where
-     be = Fraction blahCount elemCount
+     be = Fraction blahCount fullCount
 
+
+layIndex :: Int -> Double -> Layout ()
+layIndex n d = lay $ showFFloat (Just n ) d ""
 
 layListSep :: Layout () -> (a -> Layout ()) -> [a] -> Layout ()
+
 layListSep sep layA = \case
     [] -> return ()
     [a] -> layA a
