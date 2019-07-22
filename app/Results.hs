@@ -78,7 +78,7 @@ makeResult tree = Result {..}
         blahCount = Tree.blahCount tree
         xfrags = Tree.fragCount tree - 1
         understood = intToDouble (fullCount - blahCount) / intToDouble fullCount
-        penalty = xfrags + blahCount -- + fullCount
+        penalty = 2 * xfrags + blahCount -- + fullCount
         -- nps = Tree.allNps tree
 
 

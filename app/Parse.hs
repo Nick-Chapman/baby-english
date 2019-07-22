@@ -4,7 +4,6 @@
 
 module Parse (parseTree) where
 
-import Data.List.Extra(lower)
 import Prelude hiding(exp,fail,words,seq,pred)
 import EarleyM (Gram,Lang,fail,alts,produce,declare,getToken,many,skipWhile)
 import qualified Data.Char as Char
@@ -70,7 +69,7 @@ phraseLang space word phrase lexicon = (phrase',blah)
         multiword w cat = alts [w, seq cat [w, multiword w cat]]
 
         anyword = pickWord (const True)
-        unknown = pickWord (not . inLexicon lexicon . lower)
+        unknown = pickWord (not . inLexicon lexicon)
 
         nommy = multiword (unknown BlahNoun) Nom
         nom = alts [phraseCat Nom, nommy]
@@ -85,7 +84,7 @@ phraseLang space word phrase lexicon = (phrase',blah)
 
         lexicalPhrase = do
             w <- word
-            let frames = lookLexicon lexicon (lower w)
+            let frames = lookLexicon lexicon w
             alts $ flip map frames $ \(cat,(pos,sels)) -> do
                 let args = map (\sel -> sel comps) sels
                 seq cat (return (mkWord pos w) : args)
@@ -95,15 +94,19 @@ phraseLang space word phrase lexicon = (phrase',blah)
             seq Sen [np,vp], -- sentence construction
             seq Nom [nom,pp], -- PP attachment to NOM
             --seq NP [nom], -- NP without D -- Too general. Invents structure / Not lexical
+
             fail
             ]
 
-        vp' = alts [unknown BlahVerb, vp]
+        --vp' = alts [unknown BlahVerb, vp]
+
 
         verbPhrase = alts [
-            seq VP [vp',np],
-            seq VP [vp',pp], -- PP attachment to VP (or VP taking PP)
-            seq VP [vp',advp]
+            seq VP [unknown BlahVerb],
+            seq VP [vp,np],
+            seq VP [vp,pp], -- PP attachment to VP (or VP taking PP)
+            seq VP [vp,comp],
+            seq VP [vp,advp]
             ]
 
         conjunction x = do

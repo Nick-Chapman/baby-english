@@ -26,9 +26,9 @@ the_lexicon = everything
         everything = combine [
 
             det   ["the","a","your","her","his","my","these","that","those"],
-            pro   ["you","he","she","it","they","i","we","her","there","that","me"],
-            prep  ["of","to","at","with","on","in","by","for","from","into"],
-            prep' ["by"],
+            pro   ["you","he","she","it","they","i","we","her","there","that","me","this"],
+            prep  ["of","to","at","with","on","in","by","for","from","into","till"],
+            prep' ["by","till"],
             cop   ["was","is","are","been","be","were"],
             conj  ["and","or","but"],
             particle ["up","down","out"],
@@ -38,8 +38,14 @@ the_lexicon = everything
 
             --verbs ["do","has"],
             inflectedVerbs,
-            advp ["slightly"], -- TODO, make a "ly" rule
-            advp ["forward"]
+            advp ["slightly","playfully"], -- TODO, make a "ly" rule
+            advp ["forward"],
+
+            entry VP AdvP [vp] ["almost"], -- pre adverb
+
+            entry VP Verb [vp] ["had","can","do"],
+
+            properNoun
             ]
 
         complementizer = entry Comp Complementizer [sen]
@@ -49,11 +55,11 @@ the_lexicon = everything
         det = entry NP Det [nom]
         pro = entry NP Pro []
         prep = entry PP Prep [np]
-        prep' = comb $ map (entry PP Prep) [[nom],[comp]]
+        prep' = comb $ map (entry PP Prep) [[nom],[comp],[sen]]
         conj = entry Conj Conj []
         cop = comb $ map (entry VP Cop) ([pp]:[sen]:frames)
 
-        inflectedVerbs = combine $ map (mkRule verbInflecion VP Verb) frames
+        inflectedVerbs = combine $ map (mkRule verbInflecion VP Verb) [[]]
         verbInflecion w = isEd w || isIng w
         isEd = ("ed" `isSuffixOf`)
         isIng = ("ing" `isSuffixOf`)
@@ -64,3 +70,11 @@ the_lexicon = everything
             [np],
             [comp]
             ]
+
+        properNoun = combine [
+            mkRule startsWithCapital NP Proper [],
+            mkRule startsWithCapital Nom BlahNoun []
+            ]
+
+        startsWithCapital :: String -> Bool
+        startsWithCapital s = head s `elem` ['A'..'Z']

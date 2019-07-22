@@ -20,6 +20,7 @@ data Cat =
     | Verb
     | Det | Pro | Prep | Cop | Complementizer
     | Conj
+    | Proper
 
     deriving (Eq)
 
@@ -58,3 +59,4 @@ instance Show Cat where
         Complementizer -> "Complementizer"
 
         Conj -> "&"
+        Proper -> "@"

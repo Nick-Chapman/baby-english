@@ -11,6 +11,7 @@ import Prelude hiding(exp,fail,words,seq,pred)
 import EarleyM (Gram)
 import Cat
 import Tree
+import Data.List.Extra(lower)
 
 import Data.Map(Map)
 import qualified Data.Map as Map hiding (map,filter)
@@ -48,7 +49,10 @@ words :: Lexicon -> [String]
 words Lexicon {entries} = Map.keys entries
 
 lookLexicon :: Lexicon -> String -> [Entry]
-lookLexicon Lexicon{entries,rule} w = Map.findWithDefault [] w entries ++ rule w
+lookLexicon Lexicon{entries,rule} w =
+    case Map.findWithDefault [] (lower w) entries of
+        [] -> rule w
+        xs -> xs
 
 entry :: Cat -> Cat -> [Sel] -> [String] -> Lexicon
 entry cat pos sels ws =
