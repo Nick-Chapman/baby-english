@@ -1,4 +1,5 @@
 .stack-work
-baby-english.cabal
+*.cabal
 *~
+stack.yaml.lock
 .markdown-preview.html
