@@ -1,0 +1,2237 @@
+--------------------------------------------------
+EXAMPLE 1: Bells jangled.
+--------------------------------------------------
+known = jangled
+unknown = bells
+minPenalty = 2
+understanding = 0.6666666666666666
+amb = 1/2
+
+selected:  1: penalty = 2
+              #xfrags = 1
+              blah/size = 1/3
+              understood = 0.667
+              (*2 (? Bells)
+                  (VP (V jangled)))
+
+--------------------------------------------------
+EXAMPLE 2: Maisie smirked.
+--------------------------------------------------
+known = smirked
+unknown = maisie
+minPenalty = 2
+understanding = 0.6666666666666666
+amb = 1/2
+
+selected:  1: penalty = 2
+              #xfrags = 1
+              blah/size = 1/3
+              understood = 0.667
+              (*2 (? Maisie)
+                  (VP (V smirked)))
+
+--------------------------------------------------
+EXAMPLE 3: They stiffened.
+--------------------------------------------------
+known = they stiffened
+unknown =
+minPenalty = 0
+understanding = 1.0
+amb = 1/5
+
+selected:  1: penalty = 0
+              #xfrags = 0
+              blah/size = 0/3
+              understood = 1.000
+              (S (NP (Pro They))
+                 (VP (V stiffened)))
+
+--------------------------------------------------
+EXAMPLE 4: The toe jabbed.
+--------------------------------------------------
+known = the jabbed
+unknown = toe
+minPenalty = 1
+understanding = 0.8
+amb = 1/5
+
+selected:  1: penalty = 1
+              #xfrags = 0
+              blah/size = 1/5
+              understood = 0.800
+              (S (NP (D The)
+                     (?N toe))
+                 (VP (V jabbed)))
+
+--------------------------------------------------
+EXAMPLE 5: Intangible assets
+--------------------------------------------------
+known =
+unknown = intangible assets
+minPenalty = 3
+understanding = 0.0
+amb = 1/1
+
+selected:  1: penalty = 3
+              #xfrags = 0
+              blah/size = 3/3
+              understood = 0.000
+              (? (? Intangible)
+                 (? assets))
+
+--------------------------------------------------
+EXAMPLE 6: Then she fainted.
+--------------------------------------------------
+known = she fainted
+unknown = then
+minPenalty = 2
+understanding = 0.8
+amb = 2/7
+
+selected:  1: penalty = 2
+              #xfrags = 1
+              blah/size = 1/5
+              understood = 0.800
+              (*2 (VP (?V Then)
+                      (NP (Pro she)))
+                  (VP (V fainted)))
+
+           2: penalty = 2
+              #xfrags = 1
+              blah/size = 1/5
+              understood = 0.800
+              (*2 (? Then)
+                  (S (NP (Pro she))
+                     (VP (V fainted))))
+
+--------------------------------------------------
+EXAMPLE 7: Don't retaliate.
+--------------------------------------------------
+known =
+unknown = don't retaliate
+minPenalty = 3
+understanding = 0.0
+amb = 1/1
+
+selected:  1: penalty = 3
+              #xfrags = 0
+              blah/size = 3/3
+              understood = 0.000
+              (? (? Don't)
+                 (? retaliate))
+
+--------------------------------------------------
+EXAMPLE 8: The pain subsides.
+--------------------------------------------------
+known = the
+unknown = pain subsides
+minPenalty = 2
+understanding = 0.6
+amb = 1/3
+
+selected:  1: penalty = 2
+              #xfrags = 0
+              blah/size = 2/5
+              understood = 0.600
+              (NP (D The)
+                  (Nom (?N pain)
+                       (?N subsides)))
+
+--------------------------------------------------
+EXAMPLE 9: The AI was piqued.
+--------------------------------------------------
+known = the was piqued
+unknown = ai
+minPenalty = 1
+understanding = 0.8571428571428571
+amb = 1/12
+
+selected:  1: penalty = 1
+              #xfrags = 0
+              blah/size = 1/7
+              understood = 0.857
+              (S (NP (D The)
+                     (?N AI))
+                 (VP (Cop was)
+                     (VP (V piqued))))
+
+--------------------------------------------------
+EXAMPLE 10: I'm flattered.
+--------------------------------------------------
+known = flattered
+unknown = i'm
+minPenalty = 2
+understanding = 0.6666666666666666
+amb = 1/2
+
+selected:  1: penalty = 2
+              #xfrags = 1
+              blah/size = 1/3
+              understood = 0.667
+              (*2 (? I'm)
+                  (VP (V flattered)))
+
+--------------------------------------------------
+EXAMPLE 11: Sister beckoned me.
+--------------------------------------------------
+known = beckoned me
+unknown = sister
+minPenalty = 2
+understanding = 0.8
+amb = 2/6
+
+selected:  1: penalty = 2
+              #xfrags = 1
+              blah/size = 1/5
+              understood = 0.800
+              (*2 (? Sister)
+                  (VP (V beckoned)
+                      (NP (Pro me))))
+
+           2: penalty = 2
+              #xfrags = 1
+              blah/size = 1/5
+              understood = 0.800
+              (*2 (? Sister)
+                  (VP (VP (V beckoned))
+                      (NP (Pro me))))
+
+--------------------------------------------------
+EXAMPLE 12: Stumpy tails wagged.
+--------------------------------------------------
+known = wagged
+unknown = stumpy tails
+minPenalty = 4
+understanding = 0.4
+amb = 1/2
+
+selected:  1: penalty = 4
+              #xfrags = 1
+              blah/size = 3/5
+              understood = 0.400
+              (*2 (? (? Stumpy)
+                     (? tails))
+                  (VP (V wagged)))
+
+--------------------------------------------------
+EXAMPLE 13: COMMUNITY PERSONIFIED
+--------------------------------------------------
+known = personified
+unknown = community
+minPenalty = 2
+understanding = 0.6666666666666666
+amb = 1/2
+
+selected:  1: penalty = 2
+              #xfrags = 1
+              blah/size = 1/3
+              understood = 0.667
+              (*2 (? COMMUNITY)
+                  (VP (V PERSONIFIED)))
+
+--------------------------------------------------
+EXAMPLE 14: Yeah, car boot sale.
+--------------------------------------------------
+known =
+unknown = yeah car boot sale
+minPenalty = 7
+understanding = 0.0
+amb = 1/1
+
+selected:  1: penalty = 7
+              #xfrags = 0
+              blah/size = 7/7
+              understood = 0.000
+              (? (? Yeah)
+                 (? (? car)
+                    (? (? boot)
+                       (? sale))))
+
+--------------------------------------------------
+EXAMPLE 15: The absconded divine.
+--------------------------------------------------
+known = the absconded
+unknown = divine
+minPenalty = 4
+understanding = 0.6
+amb = 1/2
+
+selected:  1: penalty = 4
+              #xfrags = 2
+              blah/size = 2/5
+              understood = 0.600
+              (*3 (? The)
+                  (VP (V absconded))
+                  (? divine))
+
+--------------------------------------------------
+EXAMPLE 16: Practise these things.
+--------------------------------------------------
+known = these
+unknown = practise things
+minPenalty = 2
+understanding = 0.6
+amb = 1/3
+
+selected:  1: penalty = 2
+              #xfrags = 0
+              blah/size = 2/5
+              understood = 0.600
+              (VP (?V Practise)
+                  (NP (D these)
+                      (?N things)))
+
+--------------------------------------------------
+EXAMPLE 17: She felt sick and awed.
+--------------------------------------------------
+known = she and awed
+unknown = felt sick
+minPenalty = 7
+understanding = 0.4444444444444444
+amb = 1/5
+
+selected:  1: penalty = 7
+              #xfrags = 2
+              blah/size = 5/9
+              understood = 0.444
+              (*3 (? (? She)
+                     (? (? felt)
+                        (? sick)))
+                  (& (& and))
+                  (VP (V awed)))
+
+--------------------------------------------------
+EXAMPLE 18: A hero of the Reich.
+--------------------------------------------------
+known = a of the
+unknown = hero reich
+minPenalty = 2
+understanding = 0.7777777777777778
+amb = 1/8
+
+selected:  1: penalty = 2
+              #xfrags = 0
+              blah/size = 2/9
+              understood = 0.778
+              (NP (D A)
+                  (Nom (?N hero)
+                       (PP (Prep of)
+                           (NP (D the)
+                               (?N Reich)))))
+
+--------------------------------------------------
+EXAMPLE 19: He glowered down at her.
+--------------------------------------------------
+known = he glowered down at her
+unknown =
+minPenalty = 0
+understanding = 1.0
+amb = 1/24
+
+selected:  1: penalty = 0
+              #xfrags = 0
+              blah/size = 0/9
+              understood = 1.000
+              (S (NP (Pro He))
+                 (VP (VP (VP (V glowered))
+                         (PP (Prep down)))
+                     (PP (Prep at)
+                         (NP (Pro her)))))
+
+--------------------------------------------------
+EXAMPLE 20: No need to dramatize.
+--------------------------------------------------
+known = need to
+unknown = no dramatize
+minPenalty = 6
+understanding = 0.42857142857142855
+amb = 1/2
+
+selected:  1: penalty = 6
+              #xfrags = 2
+              blah/size = 4/7
+              understood = 0.429
+              (*3 (? No)
+                  (VP (V need))
+                  (? (? to)
+                     (? dramatize)))
+
+--------------------------------------------------
+EXAMPLE 21: A pity he was so crazed.
+--------------------------------------------------
+known = a he was crazed
+unknown = pity so
+minPenalty = 6
+understanding = 0.6363636363636364
+amb = 1/12
+
+selected:  1: penalty = 6
+              #xfrags = 2
+              blah/size = 4/11
+              understood = 0.636
+              (*3 (NP (D A)
+                      (?N pity))
+                  (S (NP (Pro he))
+                     (VP (Cop was)))
+                  (? (? so)
+                     (? crazed)))
+
+--------------------------------------------------
+EXAMPLE 22: Don't think I'm joking.
+--------------------------------------------------
+known = joking
+unknown = don't think i'm
+minPenalty = 6
+understanding = 0.2857142857142857
+amb = 1/2
+
+selected:  1: penalty = 6
+              #xfrags = 1
+              blah/size = 5/7
+              understood = 0.286
+              (*2 (? (? Don't)
+                     (? (? think)
+                        (? I'm)))
+                  (VP (V joking)))
+
+--------------------------------------------------
+EXAMPLE 23: They're comin' by train.
+--------------------------------------------------
+known = by
+unknown = they're comin' train
+minPenalty = 3
+understanding = 0.5714285714285714
+amb = 1/5
+
+selected:  1: penalty = 3
+              #xfrags = 0
+              blah/size = 3/7
+              understood = 0.571
+              (Nom (Nom (?N They're)
+                        (?N comin'))
+                   (PP (Prep by)
+                       (?N train)))
+
+--------------------------------------------------
+EXAMPLE 24: He chucks it into the sea.
+--------------------------------------------------
+known = he it into the
+unknown = chucks sea
+minPenalty = 2
+understanding = 0.8181818181818182
+amb = 1/15
+
+selected:  1: penalty = 2
+              #xfrags = 0
+              blah/size = 2/11
+              understood = 0.818
+              (S (NP (Pro He))
+                 (VP (VP (?V chucks)
+                         (NP (Pro it)))
+                     (PP (Prep into)
+                         (NP (D the)
+                             (?N sea)))))
+
+--------------------------------------------------
+EXAMPLE 25: Bob -- I'm not joking.
+--------------------------------------------------
+known = not joking
+unknown = bob -- i'm
+minPenalty = 6
+understanding = 0.4444444444444444
+amb = 1/3
+
+selected:  1: penalty = 6
+              #xfrags = 1
+              blah/size = 5/9
+              understood = 0.444
+              (*2 (? (? Bob)
+                     (? (? --)
+                        (? I'm)))
+                  (VP (Aux not)
+                      (VP (V joking))))
+
+--------------------------------------------------
+EXAMPLE 26: They all paraded in there.
+--------------------------------------------------
+known = they all paraded in there
+unknown =
+minPenalty = 0
+understanding = 1.0
+amb = 2/19
+
+selected:  1: penalty = 0
+              #xfrags = 0
+              blah/size = 0/9
+              understood = 1.000
+              (S (NP (Pro They))
+                 (VP (VP (Aux all)
+                         (VP (V paraded)))
+                     (PP (Prep in)
+                         (NP (Pro there)))))
+
+           2: penalty = 0
+              #xfrags = 0
+              blah/size = 0/9
+              understood = 1.000
+              (S (NP (Pro They))
+                 (VP (Aux all)
+                     (VP (VP (V paraded))
+                         (PP (Prep in)
+                             (NP (Pro there))))))
+
+--------------------------------------------------
+EXAMPLE 27: Enquire on your next visit!
+--------------------------------------------------
+known = on your
+unknown = enquire next visit!
+minPenalty = 3
+understanding = 0.6666666666666666
+amb = 2/9
+
+selected:  1: penalty = 3
+              #xfrags = 0
+              blah/size = 3/9
+              understood = 0.667
+              (VP (?V Enquire)
+                  (PP (Prep on)
+                      (NP (D your)
+                          (Nom (?N next)
+                               (?N visit!)))))
+
+           2: penalty = 3
+              #xfrags = 0
+              blah/size = 3/9
+              understood = 0.667
+              (Nom (?N Enquire)
+                   (PP (Prep on)
+                       (NP (D your)
+                           (Nom (?N next)
+                                (?N visit!)))))
+
+--------------------------------------------------
+EXAMPLE 28: I've got a boat to mend.
+--------------------------------------------------
+known = a to
+unknown = i've got boat mend
+minPenalty = 8
+understanding = 0.45454545454545453
+amb = 1/3
+
+selected:  1: penalty = 8
+              #xfrags = 2
+              blah/size = 6/11
+              understood = 0.455
+              (*3 (? I've)
+                  (VP (?V got)
+                      (NP (D a)
+                          (?N boat)))
+                  (? (? to)
+                     (? mend)))
+
+--------------------------------------------------
+EXAMPLE 29: The head flaps his right hand.
+--------------------------------------------------
+known = the his
+unknown = head flaps right hand
+minPenalty = 4
+understanding = 0.6363636363636364
+amb = 1/13
+
+selected:  1: penalty = 4
+              #xfrags = 0
+              blah/size = 4/11
+              understood = 0.636
+              (S (NP (D The)
+                     (?N head))
+                 (VP (?V flaps)
+                     (NP (D his)
+                         (Nom (?N right)
+                              (?N hand)))))
+
+--------------------------------------------------
+EXAMPLE 30: She got up and limped forward.
+--------------------------------------------------
+known = she up and limped forward
+unknown = got
+minPenalty = 1
+understanding = 0.9090909090909091
+amb = 2/52
+
+selected:  1: penalty = 1
+              #xfrags = 0
+              blah/size = 1/11
+              understood = 0.909
+              (S (NP (Pro She))
+                 (VP (VP (VP (?V got)
+                             (PP (Prep up)))
+                         (& (& and))
+                         (VP (V limped)))
+                     (AdvP (AdvP forward))))
+
+           2: penalty = 1
+              #xfrags = 0
+              blah/size = 1/11
+              understood = 0.909
+              (S (NP (Pro She))
+                 (VP (VP (?V got)
+                         (PP (Prep up)))
+                     (& (& and))
+                     (VP (VP (V limped))
+                         (AdvP (AdvP forward)))))
+
+--------------------------------------------------
+EXAMPLE 31: Boxing, football, athletics.
+--------------------------------------------------
+known = boxing
+unknown = football athletics
+minPenalty = 4
+understanding = 0.4
+amb = 1/2
+
+selected:  1: penalty = 4
+              #xfrags = 1
+              blah/size = 3/5
+              understood = 0.400
+              (*2 (VP (V Boxing))
+                  (? (? football)
+                     (? athletics)))
+
+--------------------------------------------------
+EXAMPLE 32: Eloise switched on the lights.
+--------------------------------------------------
+known = switched on the
+unknown = eloise lights
+minPenalty = 3
+understanding = 0.7777777777777778
+amb = 1/6
+
+selected:  1: penalty = 3
+              #xfrags = 1
+              blah/size = 2/9
+              understood = 0.778
+              (*2 (? Eloise)
+                  (VP (VP (V switched))
+                      (PP (Prep on)
+                          (NP (D the)
+                              (?N lights)))))
+
+--------------------------------------------------
+EXAMPLE 33: to be transcribed on the right.
+--------------------------------------------------
+known = to be transcribed on the
+unknown = right
+minPenalty = 1
+understanding = 0.9090909090909091
+amb = 3/23
+
+selected:  1: penalty = 1
+              #xfrags = 0
+              blah/size = 1/11
+              understood = 0.909
+              (VP (VP (Aux to)
+                      (VP (Cop be)
+                          (VP (V transcribed))))
+                  (PP (Prep on)
+                      (NP (D the)
+                          (?N right))))
+
+           2: penalty = 1
+              #xfrags = 0
+              blah/size = 1/11
+              understood = 0.909
+              (VP (Aux to)
+                  (VP (VP (Cop be)
+                          (VP (V transcribed)))
+                      (PP (Prep on)
+                          (NP (D the)
+                              (?N right)))))
+
+           3: penalty = 1
+              #xfrags = 0
+              blah/size = 1/11
+              understood = 0.909
+              (VP (Aux to)
+                  (VP (Cop be)
+                      (VP (VP (V transcribed))
+                          (PP (Prep on)
+                              (NP (D the)
+                                  (?N right))))))
+
+--------------------------------------------------
+EXAMPLE 34: I was astonished by what I saw.
+--------------------------------------------------
+known = i was astonished by what
+unknown = saw
+minPenalty = 8
+understanding = 0.46153846153846156
+amb = 1/13
+
+selected:  1: penalty = 8
+              #xfrags = 1
+              blah/size = 7/13
+              understood = 0.462
+              (*2 (S (NP (Pro I))
+                     (VP (Cop was)
+                         (VP (V astonished))))
+                  (? (? by)
+                     (? (? what)
+                        (? (? I)
+                           (? saw)))))
+
+--------------------------------------------------
+EXAMPLE 35: Roy winced as he thought of her.
+--------------------------------------------------
+known = winced as he of her
+unknown = roy thought
+minPenalty = 3
+understanding = 0.8461538461538461
+amb = 1/13
+
+selected:  1: penalty = 3
+              #xfrags = 1
+              blah/size = 2/13
+              understood = 0.846
+              (*2 (? Roy)
+                  (VP (V winced)
+                      (Comp (Complementizer as)
+                            (S (NP (Pro he))
+                               (VP (?V thought)
+                                   (PP (Prep of)
+                                       (NP (Pro her))))))))
+
+--------------------------------------------------
+EXAMPLE 36: Nina and Modi flirted playfully.
+--------------------------------------------------
+known = and flirted
+unknown = nina modi playfully
+minPenalty = 8
+understanding = 0.3333333333333333
+amb = 2/3
+
+selected:  1: penalty = 8
+              #xfrags = 2
+              blah/size = 6/9
+              understood = 0.333
+              (*3 (? (? Nina)
+                     (? (? and)
+                        (? Modi)))
+                  (VP (V flirted))
+                  (? playfully))
+
+           2: penalty = 8
+              #xfrags = 2
+              blah/size = 6/9
+              understood = 0.333
+              (*3 (? Nina)
+                  (& (& and))
+                  (? (? Modi)
+                     (? (? flirted)
+                        (? playfully))))
+
+--------------------------------------------------
+EXAMPLE 37: Retrace your steps to Aberarder.
+--------------------------------------------------
+known = your to
+unknown = retrace steps aberarder
+minPenalty = 6
+understanding = 0.4444444444444444
+amb = 1/3
+
+selected:  1: penalty = 6
+              #xfrags = 1
+              blah/size = 5/9
+              understood = 0.444
+              (*2 (VP (?V Retrace)
+                      (NP (D your)
+                          (?N steps)))
+                  (? (? to)
+                     (? Aberarder)))
+
+--------------------------------------------------
+EXAMPLE 38: Gallivanting at night -- really.
+--------------------------------------------------
+known = gallivanting at
+unknown = night -- really
+minPenalty = 8
+understanding = 0.2222222222222222
+amb = 1/2
+
+selected:  1: penalty = 8
+              #xfrags = 1
+              blah/size = 7/9
+              understood = 0.222
+              (*2 (VP (V Gallivanting))
+                  (? (? at)
+                     (? (? night)
+                        (? (? --)
+                           (? really)))))
+
+--------------------------------------------------
+EXAMPLE 39: We had ne'er been broken-hearted.
+--------------------------------------------------
+known = we ne'er been broken-hearted
+unknown = had
+minPenalty = 4
+understanding = 0.6666666666666666
+amb = 1/9
+
+selected:  1: penalty = 4
+              #xfrags = 1
+              blah/size = 3/9
+              understood = 0.667
+              (*2 (? (? We)
+                     (? had))
+                  (VP (Aux ne'er)
+                      (VP (Cop been)
+                          (VP (V broken-hearted)))))
+
+--------------------------------------------------
+EXAMPLE 40: he hugged the dog till it barked.
+--------------------------------------------------
+known = he hugged the it barked
+unknown = dog till
+minPenalty = 3
+understanding = 0.8461538461538461
+amb = 4/101
+
+selected:  1: penalty = 3
+              #xfrags = 1
+              blah/size = 2/13
+              understood = 0.846
+              (*2 (S (NP (Pro he))
+                     (VP (VP (V hugged))
+                         (NP (D the)
+                             (Nom (?N dog)
+                                  (?N till)))))
+                  (S (NP (Pro it))
+                     (VP (V barked))))
+
+           2: penalty = 3
+              #xfrags = 1
+              blah/size = 2/13
+              understood = 0.846
+              (*2 (S (NP (Pro he))
+                     (VP (V hugged)
+                         (NP (D the)
+                             (Nom (?N dog)
+                                  (?N till)))))
+                  (S (NP (Pro it))
+                     (VP (V barked))))
+
+           3: penalty = 3
+              #xfrags = 1
+              blah/size = 2/13
+              understood = 0.846
+              (*2 (S (NP (Pro he))
+                     (VP (VP (V hugged)
+                             (NP (D the)
+                                 (Nom (?N dog)
+                                      (?N till))))
+                         (NP (Pro it))))
+                  (VP (V barked)))
+
+           4: penalty = 3
+              #xfrags = 1
+              blah/size = 2/13
+              understood = 0.846
+              (*2 (S (NP (Pro he))
+                     (VP (VP (VP (V hugged))
+                             (NP (D the)
+                                 (Nom (?N dog)
+                                      (?N till))))
+                         (NP (Pro it))))
+                  (VP (V barked)))
+
+--------------------------------------------------
+EXAMPLE 41: Don't let's throw your words away
+--------------------------------------------------
+known = your
+unknown = don't let's throw words away
+minPenalty = 7
+understanding = 0.45454545454545453
+amb = 1/5
+
+selected:  1: penalty = 7
+              #xfrags = 1
+              blah/size = 6/11
+              understood = 0.455
+              (*2 (? (? Don't)
+                     (? let's))
+                  (VP (?V throw)
+                      (NP (D your)
+                          (Nom (?N words)
+                               (?N away)))))
+
+--------------------------------------------------
+EXAMPLE 42: Do not stand at my grave and weep.
+--------------------------------------------------
+known = not at my and
+unknown = do stand grave weep
+minPenalty = 7
+understanding = 0.7333333333333333
+amb = 1/12
+
+selected:  1: penalty = 7
+              #xfrags = 3
+              blah/size = 4/15
+              understood = 0.733
+              (*4 (? Do)
+                  (VP (Aux not)
+                      (VP (?V stand)
+                          (PP (Prep at)
+                              (NP (D my)
+                                  (?N grave)))))
+                  (& (& and))
+                  (? weep))
+
+--------------------------------------------------
+EXAMPLE 43: The seconder of formally seconded.
+--------------------------------------------------
+known = the of seconded
+unknown = seconder formally
+minPenalty = 7
+understanding = 0.3333333333333333
+amb = 1/3
+
+selected:  1: penalty = 7
+              #xfrags = 1
+              blah/size = 6/9
+              understood = 0.333
+              (*2 (NP (D The)
+                      (?N seconder))
+                  (? (? of)
+                     (? (? formally)
+                        (? seconded))))
+
+--------------------------------------------------
+EXAMPLE 44: Her voice trembled and almost broke.
+--------------------------------------------------
+known = her trembled and
+unknown = voice almost broke
+minPenalty = 6
+understanding = 0.6363636363636364
+amb = 1/10
+
+selected:  1: penalty = 6
+              #xfrags = 2
+              blah/size = 4/11
+              understood = 0.636
+              (*3 (S (NP (D Her)
+                         (?N voice))
+                     (VP (V trembled)))
+                  (& (& and))
+                  (? (? almost)
+                     (? broke)))
+
+--------------------------------------------------
+EXAMPLE 45: Meredith frowned, considering this.
+--------------------------------------------------
+known = frowned considering
+unknown = meredith this
+minPenalty = 4
+understanding = 0.7142857142857143
+amb = 1/5
+
+selected:  1: penalty = 4
+              #xfrags = 2
+              blah/size = 2/7
+              understood = 0.714
+              (*3 (? Meredith)
+                  (VP (V frowned)
+                      (VP (V considering)))
+                  (? this))
+
+--------------------------------------------------
+EXAMPLE 46: I hope that you can all do your bit.
+--------------------------------------------------
+known = i that you all your
+unknown = hope can do bit
+minPenalty = 11
+understanding = 0.4117647058823529
+amb = 1/17
+
+selected:  1: penalty = 11
+              #xfrags = 1
+              blah/size = 10/17
+              understood = 0.412
+              (*2 (S (NP (Pro I))
+                     (VP (VP (?V hope)
+                             (NP (Pro that)))
+                         (NP (Pro you))))
+                  (? (? can)
+                     (? (? all)
+                        (? (? do)
+                           (? (? your)
+                              (? bit))))))
+
+--------------------------------------------------
+EXAMPLE 47: Suliman barked a few guttural words.
+--------------------------------------------------
+known = barked a
+unknown = suliman few guttural words
+minPenalty = 5
+understanding = 0.6363636363636364
+amb = 2/14
+
+selected:  1: penalty = 5
+              #xfrags = 1
+              blah/size = 4/11
+              understood = 0.636
+              (*2 (? Suliman)
+                  (VP (VP (V barked))
+                      (NP (D a)
+                          (Nom (?N few)
+                               (Nom (?N guttural)
+                                    (?N words))))))
+
+           2: penalty = 5
+              #xfrags = 1
+              blah/size = 4/11
+              understood = 0.636
+              (*2 (? Suliman)
+                  (VP (V barked)
+                      (NP (D a)
+                          (Nom (?N few)
+                               (Nom (?N guttural)
+                                    (?N words))))))
+
+--------------------------------------------------
+EXAMPLE 48: Tim was coming loping down the aisle.
+--------------------------------------------------
+known = was coming loping down the
+unknown = tim aisle
+minPenalty = 3
+understanding = 0.8461538461538461
+amb = 6/67
+
+selected:  1: penalty = 3
+              #xfrags = 1
+              blah/size = 2/13
+              understood = 0.846
+              (*2 (? Tim)
+                  (VP (VP (VP (Cop was)
+                              (VP (V coming)
+                                  (VP (V loping))))
+                          (PP (Prep down)))
+                      (NP (D the)
+                          (?N aisle))))
+
+           2: penalty = 3
+              #xfrags = 1
+              blah/size = 2/13
+              understood = 0.846
+              (*2 (? Tim)
+                  (VP (VP (Cop was)
+                          (VP (VP (V coming)
+                                  (VP (V loping)))
+                              (PP (Prep down))))
+                      (NP (D the)
+                          (?N aisle))))
+
+           3: penalty = 3
+              #xfrags = 1
+              blah/size = 2/13
+              understood = 0.846
+              (*2 (? Tim)
+                  (VP (Cop was)
+                      (VP (VP (VP (V coming)
+                                  (VP (V loping)))
+                              (PP (Prep down)))
+                          (NP (D the)
+                              (?N aisle)))))
+
+           4: penalty = 3
+              #xfrags = 1
+              blah/size = 2/13
+              understood = 0.846
+              (*2 (? Tim)
+                  (VP (VP (Cop was)
+                          (VP (V coming)
+                              (VP (VP (V loping))
+                                  (PP (Prep down)))))
+                      (NP (D the)
+                          (?N aisle))))
+
+           5: penalty = 3
+              #xfrags = 1
+              blah/size = 2/13
+              understood = 0.846
+              (*2 (? Tim)
+                  (VP (Cop was)
+                      (VP (VP (V coming)
+                              (VP (VP (V loping))
+                                  (PP (Prep down))))
+                          (NP (D the)
+                              (?N aisle)))))
+
+           6: penalty = 3
+              #xfrags = 1
+              blah/size = 2/13
+              understood = 0.846
+              (*2 (? Tim)
+                  (VP (Cop was)
+                      (VP (V coming)
+                          (VP (VP (VP (V loping))
+                                  (PP (Prep down)))
+                              (NP (D the)
+                                  (?N aisle))))))
+
+--------------------------------------------------
+EXAMPLE 49: Paddington shines like a skating rink.
+--------------------------------------------------
+known = a skating
+unknown = paddington shines like rink
+minPenalty = 10
+understanding = 0.2727272727272727
+amb = 1/2
+
+selected:  1: penalty = 10
+              #xfrags = 2
+              blah/size = 8/11
+              understood = 0.273
+              (*3 (? (? Paddington)
+                     (? (? shines)
+                        (? (? like)
+                           (? a))))
+                  (VP (V skating))
+                  (? rink))
+
+--------------------------------------------------
+EXAMPLE 50: They would rather converse in English.
+--------------------------------------------------
+known = they in
+unknown = would rather converse english
+minPenalty = 10
+understanding = 0.18181818181818182
+amb = 1/2
+
+selected:  1: penalty = 10
+              #xfrags = 1
+              blah/size = 9/11
+              understood = 0.182
+              (*2 (NP (Pro They))
+                  (? (? would)
+                     (? (? rather)
+                        (? (? converse)
+                           (? (? in)
+                              (? English))))))
+
+--------------------------------------------------
+EXAMPLE 51: For Goring, read Oscar Wilde himself.
+--------------------------------------------------
+known = for goring
+unknown = read oscar wilde himself
+minPenalty = 10
+understanding = 0.2727272727272727
+amb = 1/2
+
+selected:  1: penalty = 10
+              #xfrags = 2
+              blah/size = 8/11
+              understood = 0.273
+              (*3 (? For)
+                  (VP (V Goring))
+                  (? (? read)
+                     (? (? Oscar)
+                        (? (? Wilde)
+                           (? himself)))))
+
+--------------------------------------------------
+EXAMPLE 52: They are bypassed by alternative paths.
+--------------------------------------------------
+known = they are bypassed by
+unknown = alternative paths
+minPenalty = 2
+understanding = 0.8181818181818182
+amb = 2/48
+
+selected:  1: penalty = 2
+              #xfrags = 0
+              blah/size = 2/11
+              understood = 0.818
+              (S (NP (Pro They))
+                 (VP (VP (Cop are)
+                         (VP (V bypassed)))
+                     (PP (Prep by)
+                         (Nom (?N alternative)
+                              (?N paths)))))
+
+           2: penalty = 2
+              #xfrags = 0
+              blah/size = 2/11
+              understood = 0.818
+              (S (NP (Pro They))
+                 (VP (Cop are)
+                     (VP (VP (V bypassed))
+                         (PP (Prep by)
+                             (Nom (?N alternative)
+                                  (?N paths))))))
+
+--------------------------------------------------
+EXAMPLE 53: That was my Christmas shopping sewn up.
+--------------------------------------------------
+known = that was my shopping up
+unknown = christmas sewn
+minPenalty = 2
+understanding = 0.8461538461538461
+amb = 1/90
+
+selected:  1: penalty = 2
+              #xfrags = 0
+              blah/size = 2/13
+              understood = 0.846
+              (S (NP (Pro That))
+                 (VP (Cop was)
+                     (S (NP (D my)
+                            (?N Christmas))
+                        (VP (V shopping)
+                            (VP (?V sewn)
+                                (PP (Prep up)))))))
+
+--------------------------------------------------
+EXAMPLE 54: Groggily somersaulting to get airborne.
+--------------------------------------------------
+known = somersaulting to
+unknown = groggily get airborne
+minPenalty = 8
+understanding = 0.3333333333333333
+amb = 1/2
+
+selected:  1: penalty = 8
+              #xfrags = 2
+              blah/size = 6/9
+              understood = 0.333
+              (*3 (? Groggily)
+                  (VP (V somersaulting))
+                  (? (? to)
+                     (? (? get)
+                        (? airborne))))
+
+--------------------------------------------------
+EXAMPLE 55: He holstered the weapon and walked away.
+--------------------------------------------------
+known = he holstered the and walked
+unknown = weapon away
+minPenalty = 3
+understanding = 0.8461538461538461
+amb = 2/44
+
+selected:  1: penalty = 3
+              #xfrags = 1
+              blah/size = 2/13
+              understood = 0.846
+              (*2 (S (NP (Pro He))
+                     (VP (VP (V holstered)
+                             (NP (D the)
+                                 (?N weapon)))
+                         (& (& and))
+                         (VP (V walked))))
+                  (? away))
+
+           2: penalty = 3
+              #xfrags = 1
+              blah/size = 2/13
+              understood = 0.846
+              (*2 (S (NP (Pro He))
+                     (VP (VP (VP (V holstered))
+                             (NP (D the)
+                                 (?N weapon)))
+                         (& (& and))
+                         (VP (V walked))))
+                  (? away))
+
+--------------------------------------------------
+EXAMPLE 56: The Fellowship disrobed and stood naked.
+--------------------------------------------------
+known = the disrobed and naked
+unknown = fellowship stood
+minPenalty = 6
+understanding = 0.6363636363636364
+amb = 1/10
+
+selected:  1: penalty = 6
+              #xfrags = 2
+              blah/size = 4/11
+              understood = 0.636
+              (*3 (S (NP (D The)
+                         (?N Fellowship))
+                     (VP (V disrobed)))
+                  (& (& and))
+                  (? (? stood)
+                     (? naked)))
+
+--------------------------------------------------
+EXAMPLE 57: pulsing with the colors of shared thought
+--------------------------------------------------
+known = pulsing with the of shared
+unknown = colors thought
+minPenalty = 7
+understanding = 0.5384615384615384
+amb = 1/7
+
+selected:  1: penalty = 7
+              #xfrags = 1
+              blah/size = 6/13
+              understood = 0.538
+              (*2 (VP (VP (V pulsing))
+                      (PP (Prep with)
+                          (NP (D the)
+                              (?N colors))))
+                  (? (? of)
+                     (? (? shared)
+                        (? thought))))
+
+--------------------------------------------------
+EXAMPLE 58: Who the hell does he think he's kiddin'?
+--------------------------------------------------
+known = the he
+unknown = who hell does think he's kiddin'?
+minPenalty = 9
+understanding = 0.4666666666666667
+amb = 1/13
+
+selected:  1: penalty = 9
+              #xfrags = 1
+              blah/size = 8/15
+              understood = 0.467
+              (*2 (VP (VP (?V Who)
+                          (NP (D the)
+                              (Nom (?N hell)
+                                   (?N does))))
+                      (NP (Pro he)))
+                  (? (? think)
+                     (? (? he's)
+                        (? kiddin'?))))
+
+--------------------------------------------------
+EXAMPLE 59: Women are being discriminated against.
+--------------------------------------------------
+known = are being discriminated
+unknown = women against
+minPenalty = 4
+understanding = 0.7777777777777778
+amb = 1/12
+
+selected:  1: penalty = 4
+              #xfrags = 2
+              blah/size = 2/9
+              understood = 0.778
+              (*3 (? Women)
+                  (VP (Cop are)
+                      (VP (V being)
+                          (VP (V discriminated))))
+                  (? against))
+
+--------------------------------------------------
+EXAMPLE 60: Enough of loitering, he said to himself.
+--------------------------------------------------
+known = of loitering he to
+unknown = enough said himself
+minPenalty = 10
+understanding = 0.38461538461538464
+amb = 2/6
+
+selected:  1: penalty = 10
+              #xfrags = 2
+              blah/size = 8/13
+              understood = 0.385
+              (*3 (? (? Enough)
+                     (? of))
+                  (VP (VP (V loitering))
+                      (NP (Pro he)))
+                  (? (? said)
+                     (? (? to)
+                        (? himself))))
+
+           2: penalty = 10
+              #xfrags = 2
+              blah/size = 8/13
+              understood = 0.385
+              (*3 (? (? Enough)
+                     (? of))
+                  (VP (V loitering)
+                      (NP (Pro he)))
+                  (? (? said)
+                     (? (? to)
+                        (? himself))))
+
+--------------------------------------------------
+EXAMPLE 61: I've got to get wised up around here.
+--------------------------------------------------
+known = to wised up
+unknown = i've got get around here
+minPenalty = 12
+understanding = 0.3333333333333333
+amb = 1/5
+
+selected:  1: penalty = 12
+              #xfrags = 2
+              blah/size = 10/15
+              understood = 0.333
+              (*3 (? (? I've)
+                     (? (? got)
+                        (? (? to)
+                           (? get))))
+                  (VP (VP (V wised))
+                      (PP (Prep up)))
+                  (? (? around)
+                     (? here)))
+
+--------------------------------------------------
+EXAMPLE 62: Let's go to the beach for a barbecue.
+--------------------------------------------------
+known = to the for a
+unknown = let's go beach barbecue
+minPenalty = 4
+understanding = 0.7333333333333333
+amb = 2/23
+
+selected:  1: penalty = 4
+              #xfrags = 0
+              blah/size = 4/15
+              understood = 0.733
+              (Nom (Nom (Nom (?N Let's)
+                             (?N go))
+                        (PP (Prep to)
+                            (NP (D the)
+                                (?N beach))))
+                   (PP (Prep for)
+                       (NP (D a)
+                           (?N barbecue))))
+
+           2: penalty = 4
+              #xfrags = 0
+              blah/size = 4/15
+              understood = 0.733
+              (Nom (Nom (?N Let's)
+                        (?N go))
+                   (PP (Prep to)
+                       (NP (D the)
+                           (Nom (?N beach)
+                                (PP (Prep for)
+                                    (NP (D a)
+                                        (?N barbecue)))))))
+
+--------------------------------------------------
+EXAMPLE 63: Grey-haired, stooping, shabbily dressed.
+--------------------------------------------------
+known = grey-haired stooping dressed
+unknown = shabbily
+minPenalty = 4
+understanding = 0.5714285714285714
+amb = 1/6
+
+selected:  1: penalty = 4
+              #xfrags = 1
+              blah/size = 3/7
+              understood = 0.571
+              (*2 (VP (V Grey-haired)
+                      (VP (V stooping)))
+                  (? (? shabbily)
+                     (? dressed)))
+
+--------------------------------------------------
+EXAMPLE 64: She stood there, shrugging her shoulders.
+--------------------------------------------------
+known = she there shrugging her
+unknown = stood shoulders
+minPenalty = 3
+understanding = 0.8181818181818182
+amb = 2/50
+
+selected:  1: penalty = 3
+              #xfrags = 1
+              blah/size = 2/11
+              understood = 0.818
+              (*2 (S (NP (Pro She))
+                     (VP (?V stood)
+                         (NP (Pro there))))
+                  (VP (V shrugging)
+                      (NP (D her)
+                          (?N shoulders))))
+
+           2: penalty = 3
+              #xfrags = 1
+              blah/size = 2/11
+              understood = 0.818
+              (*2 (S (NP (Pro She))
+                     (VP (?V stood)
+                         (NP (Pro there))))
+                  (VP (VP (V shrugging))
+                      (NP (D her)
+                          (?N shoulders))))
+
+--------------------------------------------------
+EXAMPLE 65: The horns of the Glories began resounding.
+--------------------------------------------------
+known = the of resounding
+unknown = horns glories began
+minPenalty = 3
+understanding = 0.7692307692307693
+amb = 1/23
+
+selected:  1: penalty = 3
+              #xfrags = 0
+              blah/size = 3/13
+              understood = 0.769
+              (S (NP (D The)
+                     (Nom (?N horns)
+                          (PP (Prep of)
+                              (NP (D the)
+                                  (Nom (?N Glories)
+                                       (?N began))))))
+                 (VP (V resounding)))
+
+--------------------------------------------------
+EXAMPLE 66: Drunk priest is nicked driving to a funeral
+--------------------------------------------------
+known = is nicked driving to a
+unknown = drunk priest funeral
+minPenalty = 5
+understanding = 0.7333333333333333
+amb = 3/32
+
+selected:  1: penalty = 5
+              #xfrags = 1
+              blah/size = 4/15
+              understood = 0.733
+              (*2 (? (? Drunk)
+                     (? priest))
+                  (VP (Cop is)
+                      (VP (V nicked)
+                          (VP (VP (V driving))
+                              (PP (Prep to)
+                                  (NP (D a)
+                                      (?N funeral)))))))
+
+           2: penalty = 5
+              #xfrags = 1
+              blah/size = 4/15
+              understood = 0.733
+              (*2 (? (? Drunk)
+                     (? priest))
+                  (VP (Cop is)
+                      (VP (VP (V nicked)
+                              (VP (V driving)))
+                          (PP (Prep to)
+                              (NP (D a)
+                                  (?N funeral))))))
+
+           3: penalty = 5
+              #xfrags = 1
+              blah/size = 4/15
+              understood = 0.733
+              (*2 (? (? Drunk)
+                     (? priest))
+                  (VP (VP (Cop is)
+                          (VP (V nicked)
+                              (VP (V driving))))
+                      (PP (Prep to)
+                          (NP (D a)
+                              (?N funeral)))))
+
+--------------------------------------------------
+EXAMPLE 67: She put out her hand as if warding him off.
+--------------------------------------------------
+known = she out her as warding
+unknown = put hand if him off
+minPenalty = 12
+understanding = 0.42105263157894735
+amb = 1/29
+
+selected:  1: penalty = 12
+              #xfrags = 1
+              blah/size = 11/19
+              understood = 0.421
+              (*2 (S (NP (Pro She))
+                     (VP (VP (?V put)
+                             (PP (Prep out)))
+                         (NP (D her)
+                             (?N hand))))
+                  (? (? as)
+                     (? (? if)
+                        (? (? warding)
+                           (? (? him)
+                              (? off))))))
+
+--------------------------------------------------
+EXAMPLE 68: A door closed, taps ran, the loo flushed.
+--------------------------------------------------
+known = a closed the flushed
+unknown = door taps ran loo
+minPenalty = 11
+understanding = 0.35555555555555557
+amb = 3/11
+
+selected:  1: penalty = 11
+              #xfrags = 1
+              blah/size = 10/15
+              understood = 0.333
+              (*2 (S (NP (D A)
+                         (?N door))
+                     (VP (V closed)))
+                  (? (? taps)
+                     (? (? ran)
+                        (? (? the)
+                           (? (? loo)
+                              (? flushed))))))
+
+           2: penalty = 11
+              #xfrags = 2
+              blah/size = 9/15
+              understood = 0.400
+              (*3 (? (? A)
+                     (? (? door)
+                        (? (? closed)
+                           (? taps))))
+                  (VP (?V ran)
+                      (NP (D the)
+                          (?N loo)))
+                  (VP (V flushed)))
+
+           3: penalty = 11
+              #xfrags = 1
+              blah/size = 10/15
+              understood = 0.333
+              (*2 (? (? A)
+                     (? (? door)
+                        (? (? closed)
+                           (? (? taps)
+                              (? ran)))))
+                  (S (NP (D the)
+                         (?N loo))
+                     (VP (V flushed))))
+
+--------------------------------------------------
+EXAMPLE 69: Her heart, she noted wryly, was thumping.
+--------------------------------------------------
+known = her she noted was thumping
+unknown = heart wryly
+minPenalty = 8
+understanding = 0.5384615384615384
+amb = 2/20
+
+selected:  1: penalty = 8
+              #xfrags = 2
+              blah/size = 6/13
+              understood = 0.538
+              (*3 (S (NP (Pro Her))
+                     (VP (?V heart)
+                         (NP (Pro she))))
+                  (VP (V noted))
+                  (? (? wryly)
+                     (? (? was)
+                        (? thumping))))
+
+           2: penalty = 8
+              #xfrags = 2
+              blah/size = 6/13
+              understood = 0.538
+              (*3 (NP (D Her)
+                      (?N heart))
+                  (S (NP (Pro she))
+                     (VP (V noted)))
+                  (? (? wryly)
+                     (? (? was)
+                        (? thumping))))
+
+--------------------------------------------------
+EXAMPLE 70: Forest getting relegated is a reall bummer.
+--------------------------------------------------
+known = getting relegated is a
+unknown = forest reall bummer
+minPenalty = 4
+understanding = 0.7692307692307693
+amb = 4/64
+
+selected:  1: penalty = 4
+              #xfrags = 1
+              blah/size = 3/13
+              understood = 0.769
+              (*2 (? Forest)
+                  (VP (VP (V getting)
+                          (VP (V relegated)
+                              (VP (Cop is))))
+                      (NP (D a)
+                          (Nom (?N reall)
+                               (?N bummer)))))
+
+           2: penalty = 4
+              #xfrags = 1
+              blah/size = 3/13
+              understood = 0.769
+              (*2 (? Forest)
+                  (VP (V getting)
+                      (VP (VP (V relegated)
+                              (VP (Cop is)))
+                          (NP (D a)
+                              (Nom (?N reall)
+                                   (?N bummer))))))
+
+           3: penalty = 4
+              #xfrags = 1
+              blah/size = 3/13
+              understood = 0.769
+              (*2 (? Forest)
+                  (VP (V getting)
+                      (VP (V relegated)
+                          (VP (VP (Cop is))
+                              (NP (D a)
+                                  (Nom (?N reall)
+                                       (?N bummer)))))))
+
+           4: penalty = 4
+              #xfrags = 1
+              blah/size = 3/13
+              understood = 0.769
+              (*2 (? Forest)
+                  (VP (V getting)
+                      (VP (V relegated)
+                          (VP (Cop is)
+                              (NP (D a)
+                                  (Nom (?N reall)
+                                       (?N bummer)))))))
+
+--------------------------------------------------
+EXAMPLE 71: He was astonished that she had backed down.
+--------------------------------------------------
+known = he was astonished that she backed down
+unknown = had
+minPenalty = 6
+understanding = 0.6666666666666666
+amb = 5/90
+
+selected:  1: penalty = 6
+              #xfrags = 1
+              blah/size = 5/15
+              understood = 0.667
+              (*2 (S (NP (Pro He))
+                     (VP (VP (VP (Cop was)
+                                 (VP (V astonished)))
+                             (NP (Pro that)))
+                         (NP (Pro she))))
+                  (? (? had)
+                     (? (? backed)
+                        (? down))))
+
+           2: penalty = 6
+              #xfrags = 1
+              blah/size = 5/15
+              understood = 0.667
+              (*2 (S (NP (Pro He))
+                     (VP (VP (Cop was)
+                             (VP (VP (V astonished))
+                                 (NP (Pro that))))
+                         (NP (Pro she))))
+                  (? (? had)
+                     (? (? backed)
+                        (? down))))
+
+           3: penalty = 6
+              #xfrags = 1
+              blah/size = 5/15
+              understood = 0.667
+              (*2 (S (NP (Pro He))
+                     (VP (Cop was)
+                         (VP (VP (VP (V astonished))
+                                 (NP (Pro that)))
+                             (NP (Pro she)))))
+                  (? (? had)
+                     (? (? backed)
+                        (? down))))
+
+           4: penalty = 6
+              #xfrags = 1
+              blah/size = 5/15
+              understood = 0.667
+              (*2 (S (NP (Pro He))
+                     (VP (VP (Cop was)
+                             (VP (V astonished)
+                                 (NP (Pro that))))
+                         (NP (Pro she))))
+                  (? (? had)
+                     (? (? backed)
+                        (? down))))
+
+           5: penalty = 6
+              #xfrags = 1
+              blah/size = 5/15
+              understood = 0.667
+              (*2 (S (NP (Pro He))
+                     (VP (Cop was)
+                         (VP (VP (V astonished)
+                                 (NP (Pro that)))
+                             (NP (Pro she)))))
+                  (? (? had)
+                     (? (? backed)
+                        (? down))))
+
+--------------------------------------------------
+EXAMPLE 72: Minton repeatedly jibed at the art business.
+--------------------------------------------------
+known = jibed at the
+unknown = minton repeatedly art business
+minPenalty = 6
+understanding = 0.6153846153846154
+amb = 1/10
+
+selected:  1: penalty = 6
+              #xfrags = 1
+              blah/size = 5/13
+              understood = 0.615
+              (*2 (? (? Minton)
+                     (? repeatedly))
+                  (VP (VP (V jibed))
+                      (PP (Prep at)
+                          (NP (D the)
+                              (Nom (?N art)
+                                   (?N business))))))
+
+--------------------------------------------------
+EXAMPLE 73: Now it was Ashdown's turn to be disbelieving.
+--------------------------------------------------
+known = it was to be disbelieving
+unknown = now ashdown's turn
+minPenalty = 10
+understanding = 0.4
+amb = 1/14
+
+selected:  1: penalty = 10
+              #xfrags = 1
+              blah/size = 9/15
+              understood = 0.400
+              (*2 (? (? Now)
+                     (? (? it)
+                        (? (? was)
+                           (? (? Ashdown's)
+                              (? turn)))))
+                  (VP (Aux to)
+                      (VP (Cop be)
+                          (VP (V disbelieving)))))
+
+--------------------------------------------------
+EXAMPLE 74: Erm, not that I recollect, only in training.
+--------------------------------------------------
+known = not that i in training
+unknown = erm recollect only
+minPenalty = 13
+understanding = 0.3333333333333333
+amb = 1/5
+
+selected:  1: penalty = 13
+              #xfrags = 3
+              blah/size = 10/15
+              understood = 0.333
+              (*4 (? (? Erm)
+                     (? not))
+                  (NP (Pro that))
+                  (NP (Pro I))
+                  (? (? recollect)
+                     (? (? only)
+                        (? (? in)
+                           (? training)))))
+
+--------------------------------------------------
+EXAMPLE 75: Those green things are for Susannah's picnic.
+--------------------------------------------------
+known = those are for
+unknown = green things susannah's picnic
+minPenalty = 8
+understanding = 0.46153846153846156
+amb = 1/6
+
+selected:  1: penalty = 8
+              #xfrags = 1
+              blah/size = 7/13
+              understood = 0.462
+              (*2 (S (NP (D Those)
+                         (Nom (?N green)
+                              (?N things)))
+                     (VP (Cop are)))
+                  (? (? for)
+                     (? (? Susannah's)
+                        (? picnic))))
+
+--------------------------------------------------
+EXAMPLE 76: They were, to a man, highly skilled gawpers.
+--------------------------------------------------
+known = they were to a skilled
+unknown = man highly gawpers
+minPenalty = 5
+understanding = 0.8
+amb = 2/40
+
+selected:  1: penalty = 5
+              #xfrags = 2
+              blah/size = 3/15
+              understood = 0.800
+              (*3 (S (NP (Pro They))
+                     (VP (VP (Cop were))
+                         (PP (Prep to)
+                             (NP (D a)
+                                 (Nom (?N man)
+                                      (?N highly))))))
+                  (VP (V skilled))
+                  (? gawpers))
+
+           2: penalty = 5
+              #xfrags = 2
+              blah/size = 3/15
+              understood = 0.800
+              (*3 (S (NP (Pro They))
+                     (VP (Cop were)
+                         (PP (Prep to)
+                             (NP (D a)
+                                 (Nom (?N man)
+                                      (?N highly))))))
+                  (VP (V skilled))
+                  (? gawpers))
+
+--------------------------------------------------
+EXAMPLE 77: The windows were gone entirely or boarded over.
+--------------------------------------------------
+known = the were or boarded
+unknown = windows gone entirely over
+minPenalty = 11
+understanding = 0.3333333333333333
+amb = 1/8
+
+selected:  1: penalty = 11
+              #xfrags = 1
+              blah/size = 10/15
+              understood = 0.333
+              (*2 (S (NP (D The)
+                         (?N windows))
+                     (VP (Cop were)))
+                  (? (? gone)
+                     (? (? entirely)
+                        (? (? or)
+                           (? (? boarded)
+                              (? over))))))
+
+--------------------------------------------------
+EXAMPLE 78: She knelt in front of Lucy, clasped her hands.
+--------------------------------------------------
+known = she in of clasped her
+unknown = knelt front lucy hands
+minPenalty = 13
+understanding = 0.29411764705882354
+amb = 2/11
+
+selected:  1: penalty = 13
+              #xfrags = 1
+              blah/size = 12/17
+              understood = 0.294
+              (*2 (? (? She)
+                     (? (? knelt)
+                        (? (? in)
+                           (? (? front)
+                              (? (? of)
+                                 (? Lucy))))))
+                  (VP (VP (V clasped))
+                      (NP (D her)
+                          (?N hands))))
+
+           2: penalty = 13
+              #xfrags = 1
+              blah/size = 12/17
+              understood = 0.294
+              (*2 (? (? She)
+                     (? (? knelt)
+                        (? (? in)
+                           (? (? front)
+                              (? (? of)
+                                 (? Lucy))))))
+                  (VP (V clasped)
+                      (NP (D her)
+                          (?N hands))))
+
+--------------------------------------------------
+EXAMPLE 79: She bent and fiddled with a machine at her feet.
+--------------------------------------------------
+known = she and fiddled with a at her
+unknown = bent machine feet
+minPenalty = 7
+understanding = 0.7368421052631579
+amb = 2/47
+
+selected:  1: penalty = 7
+              #xfrags = 2
+              blah/size = 5/19
+              understood = 0.737
+              (*3 (? (? She)
+                     (? bent))
+                  (& (& and))
+                  (VP (VP (VP (V fiddled))
+                          (PP (Prep with)
+                              (NP (D a)
+                                  (?N machine))))
+                      (PP (Prep at)
+                          (NP (D her)
+                              (?N feet)))))
+
+           2: penalty = 7
+              #xfrags = 2
+              blah/size = 5/19
+              understood = 0.737
+              (*3 (? (? She)
+                     (? bent))
+                  (& (& and))
+                  (VP (VP (V fiddled))
+                      (PP (Prep with)
+                          (NP (D a)
+                              (Nom (?N machine)
+                                   (PP (Prep at)
+                                       (NP (D her)
+                                           (?N feet))))))))
+
+--------------------------------------------------
+EXAMPLE 80: His face twitched slightly with helpless regret.
+--------------------------------------------------
+known = his twitched slightly with
+unknown = face helpless regret
+minPenalty = 7
+understanding = 0.5384615384615384
+amb = 1/12
+
+selected:  1: penalty = 7
+              #xfrags = 1
+              blah/size = 6/13
+              understood = 0.538
+              (*2 (S (NP (D His)
+                         (?N face))
+                     (VP (VP (V twitched))
+                         (AdvP (AdvP slightly))))
+                  (? (? with)
+                     (? (? helpless)
+                        (? regret))))
+
+--------------------------------------------------
+EXAMPLE 81: He dives from the chair and hurtles to the door.
+--------------------------------------------------
+known = he from the and to
+unknown = dives chair hurtles door
+minPenalty = 4
+understanding = 0.7894736842105263
+amb = 1/42
+
+selected:  1: penalty = 4
+              #xfrags = 0
+              blah/size = 4/19
+              understood = 0.789
+              (S (NP (Pro He))
+                 (VP (VP (?V dives)
+                         (PP (Prep from)
+                             (NP (D the)
+                                 (?N chair))))
+                     (& (& and))
+                     (VP (?V hurtles)
+                         (PP (Prep to)
+                             (NP (D the)
+                                 (?N door))))))
+
+--------------------------------------------------
+EXAMPLE 82: We heard the fair and followed the jangling music
+--------------------------------------------------
+known = we the and followed jangling
+unknown = heard fair music
+minPenalty = 8
+understanding = 0.5882352941176471
+amb = 1/21
+
+selected:  1: penalty = 8
+              #xfrags = 1
+              blah/size = 7/17
+              understood = 0.588
+              (*2 (S (NP (Pro We))
+                     (VP (VP (?V heard)
+                             (NP (D the)
+                                 (?N fair)))
+                         (& (& and))
+                         (VP (V followed))))
+                  (? (? the)
+                     (? (? jangling)
+                        (? music))))
+
+--------------------------------------------------
+EXAMPLE 83: I do not know why the amendment has been tabled.
+--------------------------------------------------
+known = i not why the been tabled
+unknown = do know amendment has
+minPenalty = 10
+understanding = 0.5263157894736842
+amb = 1/17
+
+selected:  1: penalty = 10
+              #xfrags = 1
+              blah/size = 9/19
+              understood = 0.526
+              (*2 (? (? I)
+                     (? (? do)
+                        (? (? not)
+                           (? know))))
+                  (Comp (Complementizer why)
+                        (S (NP (D the)
+                               (Nom (?N amendment)
+                                    (?N has)))
+                           (VP (Cop been)
+                               (VP (V tabled))))))
+
+--------------------------------------------------
+EXAMPLE 84: She almost burst, suppressing fear and laughter.
+--------------------------------------------------
+known = she suppressing and
+unknown = almost burst fear laughter
+minPenalty = 12
+understanding = 0.20512820512820515
+amb = 3/4
+
+selected:  1: penalty = 12
+              #xfrags = 2
+              blah/size = 10/13
+              understood = 0.231
+              (*3 (? (? She)
+                     (? (? almost)
+                        (? burst)))
+                  (VP (V suppressing))
+                  (? (? fear)
+                     (? (? and)
+                        (? laughter))))
+
+           2: penalty = 12
+              #xfrags = 2
+              blah/size = 10/13
+              understood = 0.231
+              (*3 (? (? She)
+                     (? (? almost)
+                        (? (? burst)
+                           (? (? suppressing)
+                              (? fear)))))
+                  (& (& and))
+                  (? laughter))
+
+           3: penalty = 12
+              #xfrags = 1
+              blah/size = 11/13
+              understood = 0.154
+              (*2 (NP (Pro She))
+                  (? (? almost)
+                     (? (? burst)
+                        (? (? suppressing)
+                           (? (? fear)
+                              (? (? and)
+                                 (? laughter)))))))
+
+--------------------------------------------------
+EXAMPLE 85: He had stopped coughing, but still looked dazed.
+--------------------------------------------------
+known = he stopped coughing but looked dazed
+unknown = had still
+minPenalty = 11
+understanding = 0.4666666666666667
+amb = 1/14
+
+selected:  1: penalty = 11
+              #xfrags = 3
+              blah/size = 8/15
+              understood = 0.467
+              (*4 (? (? He)
+                     (? had))
+                  (VP (V stopped)
+                      (VP (V coughing)))
+                  (& (& but))
+                  (? (? still)
+                     (? (? looked)
+                        (? dazed))))
+
+--------------------------------------------------
+EXAMPLE 86: He's never chuckled, or giggled, or even smiled.
+--------------------------------------------------
+known = never chuckled or giggled even smiled
+unknown = he's
+minPenalty = 2
+understanding = 0.9333333333333333
+amb = 5/42
+
+selected:  1: penalty = 2
+              #xfrags = 1
+              blah/size = 1/15
+              understood = 0.933
+              (*2 (? He's)
+                  (VP (Aux never)
+                      (VP (VP (V chuckled))
+                          (& (& or))
+                          (VP (VP (V giggled))
+                              (& (& or))
+                              (VP (Aux even)
+                                  (VP (V smiled)))))))
+
+           2: penalty = 2
+              #xfrags = 1
+              blah/size = 1/15
+              understood = 0.933
+              (*2 (? He's)
+                  (VP (VP (Aux never)
+                          (VP (V chuckled)))
+                      (& (& or))
+                      (VP (VP (V giggled))
+                          (& (& or))
+                          (VP (Aux even)
+                              (VP (V smiled))))))
+
+           3: penalty = 2
+              #xfrags = 1
+              blah/size = 1/15
+              understood = 0.933
+              (*2 (? He's)
+                  (VP (VP (VP (Aux never)
+                              (VP (V chuckled)))
+                          (& (& or))
+                          (VP (V giggled)))
+                      (& (& or))
+                      (VP (Aux even)
+                          (VP (V smiled)))))
+
+           4: penalty = 2
+              #xfrags = 1
+              blah/size = 1/15
+              understood = 0.933
+              (*2 (? He's)
+                  (VP (Aux never)
+                      (VP (VP (VP (V chuckled))
+                              (& (& or))
+                              (VP (V giggled)))
+                          (& (& or))
+                          (VP (Aux even)
+                              (VP (V smiled))))))
+
+           5: penalty = 2
+              #xfrags = 1
+              blah/size = 1/15
+              understood = 0.933
+              (*2 (? He's)
+                  (VP (VP (Aux never)
+                          (VP (VP (V chuckled))
+                              (& (& or))
+                              (VP (V giggled))))
+                      (& (& or))
+                      (VP (Aux even)
+                          (VP (V smiled)))))
+#runs = 86
+#nope = 0 ()
+Effort 184.7
+Understood 58%
+Ambiguity 23.3
+Ambiguity/example 0.271
+
+Next 2 - stood
+     2 - things
+     2 - think
+     2 - thought
+     2 - words
+     3 - do
+     3 - don't
+     3 - got
+     3 - had
+     3 - i'm
